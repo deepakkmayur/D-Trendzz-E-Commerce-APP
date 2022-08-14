@@ -1,0 +1,11 @@
+/* .box{
+   background: rgb(247,247,247);
+background: linear-gradient(114deg, rgba(247,247,247,1) 0%, rgba(183,213,217,0.15764902152267157) 28%, rgba(2,20,11,1) 100%);
+margin-top:5%;
+width:70%;
+height:70%;
+} */
+.card-body{
+   margin-top:45% ;
+   background: rgb(219,232,233);
+   background: linear-gradient(103deg, rgba(219,232,233,1) 2%, rgba(34,37,37,1) 99%, rgba(83,87,85,1) 100%);

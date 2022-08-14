@@ -1,0 +1,163 @@
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+			
+			</div>
+
+
+          
+			 <div class="row justify-content-center">
+				<div class="col-lg-10">
+					<div class="wrap d-md-flex">
+						<div class="text-wrap p-4 p-lg-5 d-flex img d-flex align-items-end" style="background-image: url(images/usersignup.jpg)">   
+						
+                      </div>
+
+
+
+						<div class="login-wrap p-4 p-md-5">
+	      			<h3 class="mb-3">Create an account</h3>
+
+
+							<form id="usersignup" action="/signup" method="post"  class="signup-form">  
+
+
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group d-flex align-items-center">
+					      			<label class="label" for="name">First Name</label>
+					      			<input type="text" class="form-control"  placeholder="First Name"  name="firstname" >
+										
+					      		</div>
+
+									</div>
+
+                       <div class="col-md-12 mt-3">
+										<div class="form-group d-flex align-items-center">
+					      			<label class="label" for="name">Last Name</label>
+					      			<input type="text"  class="form-control"  placeholder="Last Name" name="lastname">
+					      		</div>
+									</div>
+
+
+									<div class="col-md-12 mt-3">
+										<div class="form-group d-flex align-items-center">  
+					      			<label class="label" for="email">Email Address</label>
+					      			<input type="text"  class="form-control"  placeholder="johndoe@gmail.com"   name="email" >   
+					      		</div>
+									</div>                                                          
+									<div class="col-md-12 mt-3">
+										<div class="form-group d-flex align-items-center">
+					      			<label class="label" for="phone">Phone no.</label>
+					      			<input type="text" class="form-control"  placeholder="......" name="phone">
+					      		</div>
+									</div>
+									<div class="col-md-12 mt-3">
+										<div class="form-group d-flex align-items-center">
+				            	<label class="label" for="password">Password</label>
+				              <input type="password" class="form-control" placeholder="Password" name="password">
+				            </div>
+									</div>
+
+                           {{!-- <div class="col-md-12">
+										<div class="form-group d-flex align-items-center">
+				            	<label class="label" for="password">Confirm-Password</label>
+				              <input type="password" class="form-control" placeholder="Password">
+				            </div>
+									</div> --}}
+									
+
+{{!-- 
+									<div class="col-md-12 my-4">
+										<div class="form-group">
+				            	<div class="w-100">
+					            	<label class="checkbox-wrap checkbox-primary">I agree all statements in terms of service
+												  <input type="checkbox" checked>
+												  <span class="checkmark"></span>
+												</label>
+											</div>
+				            </div>
+									</div> --}}
+
+									<div class="col-md-12 mt-2">
+										<div class="form-group">
+				            	<button type="submit" class="btn btn-secondary submit p-3">Register</button>
+				            </div>
+									</div>
+								</div>
+
+		          </form>
+		          {{!-- <div class="social-wrap">
+		          	<p class="or">
+		          		<span>or</span>
+		          	</p>
+		      			<p class="mb-3 text-center">Signup with this services</p>
+		      			<p class="social-media d-flex justify-content-center">
+		      				<a href="#" class="social-icon google d-flex align-items-center justify-content-center"><span class="fa fa-google"></span></a>
+									<a href="#" class="social-icon facebook d-flex align-items-center justify-content-center"><span class="fa fa-facebook"></span></a>
+									<a href="#" class="social-icon twitter d-flex align-items-center justify-content-center"><span class="fa fa-twitter"></span></a>
+								</p>
+	          	</div> --}}
+
+		          <div class="w-100 text-center mb-b">
+								<p class="mt-4">I'm already a member! <a href="/login">Sign In</a></p>                  
+		          </div>
+		        </div>
+		      </div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+
+
+
+ 
+
+	
+    {{!-- validation --}}
+    <script 
+    type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+></script>
+<script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"
+></script>
+<script>
+  $("#usersignup").validate({
+	rules: {
+    firstname: {
+      required: true,
+      minlength: 5
+    },
+	 phone: {
+      required: true,
+      minlength: 10,
+		maxlength:10
+    },
+
+	 password: {
+      required: true,
+      minlength: 5
+    },
+	 email: {
+      required: true,
+		email:true
+      
+    }
+
+  },
+	 errorClass: "authError",
+	 errorPlacement: function(error, element) {
+    error.insertAfter(element.parent('.form-group'));
+}
+  });
+</script>
+
+<style>
+	.authError{
+		color: red;
+	}
+</style>

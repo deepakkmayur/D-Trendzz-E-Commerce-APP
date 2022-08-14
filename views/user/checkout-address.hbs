@@ -1,0 +1,270 @@
+{{!-- --}}
+{{>user-header-secondary}}
+
+
+
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="container wrapper">
+
+
+
+
+	<div class="row cart-body">
+
+		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-push-6 col-sm-push-6">
+			<!--REVIEW ORDER-->
+			<form id="paymentmethod">
+				<div class="panel panel-info" id="refresh-address">
+					<div class="panel-heading">
+						Select this field<div class="pull-right"></div>
+					</div>
+					<div class="panel-body">
+
+
+						<div class="payment" style="">
+							<h4 style="color:red">Address</h4>
+
+							{{#each ADDRESS}}
+							<div class="form-check">
+
+								<input class="form-check-input" type="radio" name="time" id="flexRadioDefault1" required
+									style="margin-top:8px; margin-left:-7px ;" checked="checked" value="{{this.address.time}}">
+								{{!-- //<input type="text" value="{{this.address.firstname}}" hidden> --}}
+
+								<label class="form-check-label" for="flexRadioDefault1">
+									<p style=" font-size:2rem;  font-family:Courier New">
+										{{this.address.firstname}},{{this.address.address}},{{this.address.city}},{{this.address.state}},{{this.address.country}},{{this.address.pincode}},{{this.address.phone}},{{this.address.email}}
+									</p>
+								</label>
+							</div>
+							{{/each}}
+
+{{!-- 
+
+							<div class="paymnet" style="webkit-box-sizing: border-box;
+                                width: 50rem;
+                                  height: 17rem;
+                               border: 0.5rem solid #969696;
+                             background: #f8f9fa;
+                               margin: 0rem
+										 margin-left: 1.5rem;"> --}}
+
+								<h4 style="color:red;">Payment method</h4>
+								<div class="form-check" style="padding-top: 1.5rem;">
+									<input class="form-check-input" type="radio" name="paymentmethod" value="onlinepayment"
+										id="flexRadioDefault1" checked="checked">
+									<label class="form-check-label" for="flexRadioDefault1">
+										Online Payment
+									</label>
+								</div>
+								<div class="form-check" style="padding-top: 1.5rem;">
+									<input class="form-check-input" type="radio" name="paymentmethod" value="cashondelivery"
+										id="flexRadioDefault1">
+									<label class="form-check-label" for="flexRadioDefault1">
+										Cash on Delivery
+									</label>
+								</div>
+
+							{{!-- </div> --}}
+						</div>
+
+
+
+						<div class="">
+							<button type="button" style="background-color: rgba(1, 255, 65, 0.747) ; margin-top: 3rem;"
+								onclick="submitpayment(event)">
+								Proceed to payment</button>
+						</div>
+
+
+
+
+					</div>
+				</div>
+			</form>
+			<!--REVIEW ORDER END-->
+		</div>
+		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-pull-6 col-sm-pull-6">
+
+
+
+			<form class="form-horizontal" id="submitaddress">
+
+				<!--SHIPPING METHOD-->
+				<div class="panel panel-info">
+					<div class="panel-heading">New address</div>
+					<div class="panel-body">
+						<div class="form-group">
+							<div class="col-md-12">
+								<h4>Shipping Address</h4>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-md-6 col-xs-12">
+								<strong>First Name:</strong>
+								<input type="text" name="firstname" class="form-control" value="" />
+							</div>
+							<div class="span1"></div>
+							<div class="col-md-6 col-xs-12">
+								<strong>Last Name:</strong>
+								<input type="text" name="lastname" class="form-control" value="" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-12"><strong>Address:</strong></div>
+							<div class="col-md-12">
+								<input type="text" name="address" class="form-control" value="" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-12"><strong>City:</strong></div>
+							<div class="col-md-12">
+								<input type="text" name="city" class="form-control" value="" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-12"><strong>State:</strong></div>
+							<div class="col-md-12">
+								<input type="text" name="state" class="form-control" value="" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-12"><strong>Country:</strong></div>
+							<div class="col-md-12">
+								<input type="text" class="form-control" name="country" value="" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-12"><strong>Pincode / Postal Code:</strong></div>
+							<div class="col-md-12">
+								<input type="text" name="pincode" class="form-control" value="" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-12"><strong>Phone Number:</strong></div>
+							<div class="col-md-12"><input type="text" name="phone" class="form-control" value="" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-12"><strong>Email Address:</strong></div>
+							<div class="col-md-12"><input type="text" name="email" class="form-control" value="" />
+							</div>
+						</div>
+						{{!-- <div class="form-group">
+							<div class="col-md-12"> --}}
+								<button type="submit" class="btn" onclick="selectaddress(event)"
+									style="background-color:rgba(1, 255, 65, 0.747)">Submit</button>
+								{{!--
+							</div> --}}
+							<a href="/orderlist_page" class="btn btn-primary">Order List</a>
+
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+
+
+{{>user-footer}}
+
+
+
+<script>
+
+	function selectaddress(event) {
+		event.preventDefault()
+		console.log(event)
+		$.ajax({
+			url: '/submit_address',
+			data: $("#submitaddress").serialize(),
+			method: 'post',
+			success: (response) => {
+				$("#refresh-address").load(location.href + " #refresh-address");
+			}
+		})
+	}
+
+	function submitpayment(event) {
+		event.preventDefault()
+		console.log(event)
+		$.ajax({
+			url: "/proceed_to_checkout",
+			method: "post",
+			data: $("#paymentmethod").serialize(),
+			success: (response) => {
+				//alert(response)
+				if (response.cashondelivery_success) {
+
+					location.href = "/delivered_page"
+				} else {
+					razorpayPayment(response)
+					console.log(response, "_---------------------response in check out")
+				}
+			}
+
+		})
+	}
+	function razorpayPayment(order) {
+		console.log("------------------------------------razorpayPayment=--1---------------")
+		var options = {
+			"key": "rzp_test_kl4yRYOdFjQm6G", // Enter the Key ID generated from the Dashboard
+			"amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+			"currency": "INR",
+			"name": "",
+			"description": "Test Transaction",
+			"image": "https://example.com/your_logo",
+			"order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+			"handler": function (response) {
+
+				console.log("------------------------------------inside online pay=--1---------------")
+
+				verifyPayment(response, order)
+			},
+			"prefill": {
+				"name": "Gaurav Kumar",
+				"email": "gaurav.kumar@example.com",
+				"contact": "9999999999"
+			},
+			"notes": {
+				"address": "Razorpay Corporate Office"
+			},
+			"theme": {
+				"color": "#3399cc"
+			}
+		};
+		const rzp1 = new Razorpay(options);
+		rzp1.open();
+	}
+
+
+
+
+
+	function verifyPayment(payment, order) {
+		console.log(payment, order, "------------------------------------inside online pay=--2---------------")
+		$.ajax({
+			url: '/verify_payment',
+			data: {
+				payment,
+				order
+			},
+
+			method: 'post',
+			success: (response) => {
+				if (response.status){
+					location.href = "/delivered_page"
+				} else {
+					alert('payment failed')
+				}
+			}
+
+		})
+	}
+
+</script>

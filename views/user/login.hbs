@@ -1,0 +1,133 @@
+
+
+
+<section class="ftco-section">                   
+      <a href="/error">cart</a>
+
+	
+			<div class="row justify-content-center">   
+				
+			</div>
+			<div class="row justify-content-center">    
+					<div class="container">
+
+				<div class="col-md-12 col-lg-10">
+					<div class="wrap d-md-flex">
+						
+
+					<div class="img" style="background-image: url(images/shoe.jpeg);">  </div>
+  
+						<div class="login-wrap p-4 p-md-5">
+			      	<div class="d-flex">
+			      		<div class="w-100">
+			      			<h3 class="mb-4">Log In</h3>
+			      		</div>
+								<div class="w-100">
+									<p class="social-media d-flex justify-content-end">
+										<a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-facebook"></span></a>
+										<a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-twitter"></span></a>
+									</p>
+								</div>
+			      	</div>
+									{{#if errorMessage}}
+                            <div class="text-danger font-italic font-weight-bold">{{errorMessage}} </div>          
+                           {{/if}}
+
+									{{#if blockMessage}}
+									 <div class="text-danger font-italic font-weight-bold">{{blockMessage}} </div>          
+                           {{/if}}
+
+
+
+
+
+							<form id="userLogin" action="/login" method="POST" class="signin-form">         
+			      		<div class="form-group mb-3">
+			      			<label class="label" for="name">Email</label>   
+			      			<input type="text" class="form-control"  placeholder="email"   name="email">
+			      		</div>
+		            <div class="form-group mb-3">
+		            	<label class="label" for="password">Password</label>
+		              <input type="password" class="form-control"  placeholder="Password"   name="password">
+		            </div>
+		            <div class="form-group">
+		            	<button type="submit" class="form-control btn btn-primary rounded submit px-3">Log In</button>
+		            </div>
+		            <div class="form-group d-md-flex">
+
+							<div>
+
+							</div>
+		            	{{!-- <div class="w-50 text-left">
+			            	<label class="checkbox-wrap checkbox-primary mb-0">Remember Me
+									  <input type="checkbox" checked>
+									  <span class="checkmark"></span>
+										</label>
+									</div> --}}
+
+									<div class="w-50 text-md-right">     
+										<a href="/userforgot_password">Forgot Password</a>
+									</div>
+		            </div>
+		          </form>
+		          {{!-- <p class="text-center">Not a member? <a data-toggle="tab" href="/signup">Sign Up</a></p> --}}
+					 <div>
+              <p class="mb-0">Don't have an account?
+                <a href="/signup" class="text-blue-50 fw-bold">Sign Up</a>
+              </p>
+            </div>
+
+		        </div>
+		      </div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+	</section>
+
+
+	
+
+	
+    {{!-- validation --}}
+     <script 
+    type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"               
+></script>
+<script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"
+></script>
+<script>
+  $("#userLogin").validate({
+	rules: {
+    
+	 password: {
+      required: true,
+      minlength: 5
+    },
+	 email: {
+      required: true,
+		email:true
+      
+    }
+	},
+	errorClass: "loginErrorColour",
+  });
+</script>
+
+<style>
+	.loginErrorColour{
+		color: red;
+	}
+</style>
+
+
+ 
+
+
+	 

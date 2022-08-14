@@ -1,0 +1,201 @@
+{{!-- this partial is created because shop page navbar is overlaping with the old partial,only change made is in the header section i included a new class="header-v4" --}}
+
+
+<header class="header-v4">
+   <!-- Header desktop -->
+   <div class="container-menu-desktop">
+      <!-- Topbar -->
+      <div class="top-bar">
+         <div class="content-topbar flex-sb-m h-full container">
+            <div class="left-top-bar">
+               {{! Free shipping for standard order over $100 }}
+            </div>
+
+            <div class="right-top-bar flex-w h-full">
+
+               <a href="/account_details" class="flex-c-m trans-04 p-lr-25 ml-5">
+                  {{#if isuserloggedin}}
+                  {{isusersession.firstname}}
+                  {{else}}
+                  Account
+                  {{/if}}
+               </a>
+            </div>
+         </div>
+      </div>
+
+      <div class="wrap-menu-desktop">
+         <nav class="limiter-menu-desktop container">
+
+            <!-- Logo desktop -->
+
+            <a href="#" class="logo">
+               <img src="/images/D-trendzz logo.png" alt="img loading" />
+            </a>
+
+            <!-- Menu desktop -->
+            <div class="menu-desktop">
+               <ul class="main-menu">
+                  <li class="active-menu">
+                     <a href="/">Home</a>
+                     
+                  </li>
+
+                  <li>
+                     <a href="/shop">Shop</a>
+                  </li>
+
+                  <li>
+                    <a href="#">Account</a>                          
+                  </li>
+
+
+               </ul>
+            </div>
+
+            <!-- Icon header -->
+            <div class="wrap-icon-header flex-w flex-r-m">
+               <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
+                  <i class="zmdi zmdi-search"></i>
+               </div>
+               {{!-- desktop cart icon--}}
+               
+             
+              <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="{{cartCOUNT}}">   
+               <a href="/cart" ><i class="zmdi zmdi-shopping-cart" ></i></a>                                                                        
+							
+						</div>
+          
+
+
+
+               {{!-- desktop wishlist icon --}}
+               <a href="/wishlist" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 "
+                  data-notify="0">
+                  <i class="zmdi zmdi-favorite-outline"></i>
+               </a>
+
+               {{#if isuserloggedin}}
+               <div class="">
+                  <a class="btn btn-danger ml-5" href="/user_logout" role="button">Logout</a>
+               </div>
+               {{else}}
+               <div class="">
+                  <a class="btn btn-dark ml-5" href="/login" role="button">Login</a>
+               </div>
+               {{/if}}
+
+
+            </div>
+         </nav>
+      </div>
+   </div>
+
+   <!-- Header Mobile -->
+   <div class="wrap-header-mobile">
+      <!-- Logo moblie -->
+      <div class="logo-mobile">
+         <a href="#"><img src="/images/D-trendzz logo.png" alt="IMG-LOGO" /></a>
+      </div>
+
+      <!-- Icon header -->
+      <div class="wrap-icon-header flex-w flex-r-m m-r-15">
+         <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 js-show-modal-search">
+            <i class="zmdi zmdi-search"></i>
+         </div>
+         {{!-- cart --}}
+         {{!-- <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10  js-show-cart" data-notify="2">
+            <i class="zmdi zmdi-shopping-cart"></i>
+         </div> --}}
+              <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11  js-show-cart " data-notify="{{cartCOUNT}}">
+                  {{!-- <i class="zmdi zmdi-shopping-cart "></i> --}}
+                  <a href="/cart"><i class="zmdi zmdi-shopping-cart "></i></a>
+
+               </div>
+
+
+         <a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 " data-notify="0">
+            <i class="zmdi zmdi-favorite-outline"></i>
+         </a>
+      </div>
+      {{!-- wishlist --}}
+      <!-- Button show menu -->
+      <div class="btn-show-menu-mobile hamburger hamburger--squeeze">
+         <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+         </span>
+      </div>
+   </div>
+
+   <!-- Menu Mobile -->
+   <div class="menu-mobile">
+      <ul class="topbar-mobile">
+
+
+         <div class=" bg-dark text-white   col-xs-4 text-right  w-100 ">
+
+            {{#if isuserloggedin}}
+            <a class="btn btn-dark ml-5" href="#" role="button">{{isusersession.firstname}}</a>
+            {{else}}
+            <a class="btn btn-dark ml-5" href="#" role="button">Account</a>
+            {{/if}}
+
+         </div>
+
+      </ul>
+
+      <ul class="main-menu-m">
+         <li>
+            <a href="index.html">Home</a>
+            
+            <span class="arrow-main-menu-m">
+               <i class="fa fa-angle-right" aria-hidden="true"></i>
+            </span>
+         </li>
+
+         <li>
+            <a href="product.html">Shop</a>
+         </li>
+
+   
+
+         <li>
+            <a href="about.html">Account</a>
+         </li>
+
+     
+         <li>
+
+            {{#if isuserloggedin}}
+            <div class="">
+               <a class="btn btn-danger ml-3 " href="/user_logout" role="button">Logout</a>
+            </div>
+            {{else}}
+            <div class="">
+               <a class="btn btn-dark ml-3 " href="/login" role="button">Login</a>
+            </div>
+            {{/if}}
+         </li>
+
+      </ul>
+
+
+   </div>
+
+   <!-- Modal Search -->
+   <div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
+      <div class="container-search-header">
+         <button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
+            <img src="user/images/icons/icon-close2.png" alt="CLOSE" />
+         </button>
+
+         <form class="wrap-search-header flex-w p-l-15">
+            <button class="flex-c-m trans-04">
+               <i class="zmdi zmdi-search"></i>
+            </button>
+            <input class="plh3" type="text" name="search" placeholder="Search..." />
+         </form>
+      </div>
+   </div>
+
+</header>

@@ -1,0 +1,146 @@
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar">
+   <div class="layout-container">
+      <!-- Menu -->
+      {{>aside}}
+      <!-- / Menu -->
+
+      <!-- Layout container -->
+      <div class="layout-page">         
+         <!-- Navbar -->
+         {{>header}}
+
+         <!-- / Navbar -->
+
+         <!-- Content wrapper -->
+         <div class="content-wrapper">
+            <!-- Content -->
+            <!-- Content -->
+
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+               <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Add Products</span> </h4>                
+               <div class="card-body">
+                      {{#if errorMessage}}
+                      <p class="text-danger" >{{errorMessage}}</p>
+                      {{/if}}
+
+
+                  <form action="/admin/add_product" enctype="multipart/form-data" method="post"  >
+
+
+
+                     <div class="row">
+                        <div class="col-12 col-md-6">  
+
+                           <div class="mb-3">
+                              <label class="form-label" for="basic-default-fullname">Product Name</label>
+                              <input type="text" class="form-control" id="basic-default-fullname"
+                                 placeholder="......" name="product_name" required />
+                           </div>
+                           <div class="mb-3">
+                              <label class="form-label" for="basic-default-company">Actual Price</label>
+                              <input type="number" class="form-control" id="basic-default-company"
+                                 placeholder="......Rs" name="actualprice" required />
+                           </div>
+
+                           <div class="mb-3">
+                              <label class="form-label" for="basic-default-company">Discount Price</label>
+                              <input type="number" class="form-control" id="basic-default-company"      
+                                 placeholder="......Rs" name="price" required />
+                           </div>
+
+                           <div class="mb-3">
+                              <label class="form-label" for="basic-default-fullname">Brand</label>
+                              <input type="text" class="form-control" id="basic-default-fullname"
+                                 placeholder="......" name="brand" required />
+                           </div>
+                         
+
+                           <div class="mb-3">
+                              <label class="form-label" for="basic-default-fullname">stocks</label>       
+                              <input type="number" class="form-control" id="basic-default-fullname"
+                                 placeholder="......" name="stock" required />
+                           </div>
+
+                              <div class="mb-3">
+                                   {{!-- <label for="exampleFormControlTextarea1" class="form-label">Product Details</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea> --}}
+
+                                       <label class="form-label" for="basic-default-fullname">Description</label>
+                                       <input name="description" type="text" class="form-control" 
+                                        placeholder="......"  required />
+
+
+                                   </div>
+
+
+
+                           <div class="mb-3">
+                              <label for="defaultSelect" class="form-label">category</label>
+                              {{!-- instead of input type we add just name in select --}}
+
+                              {{!-- most of the others we write  name field in input bt here in select --}}
+                              <select id="defaultSelect" name="category" required  class="form-select">                       
+                           
+
+                               {{!-- getting the collection 'category' from the db --}}
+                                 {{#each category}}
+                                 <option value="{{this._id}}">{{this.category_name}}</option>   
+                                  {{/each}}
+                                 
+                                 
+                              </select>
+                           </div>
+
+
+                           <div class="mb-3 mt-5 ">
+                              <button type="submit" class="btn btn-success">Update</button>
+                           </div>
+
+                            
+
+
+                        </div>
+
+
+                        <div class="col-12 col-md-6">
+
+                           <div class="mb-3 ms-5">
+                             
+
+                              <!-- Image input -->
+
+                              <div class="mb-5 mt-5">
+                                 <label for="formFile" class="form-label">Images</label>
+                                 <input class="form-control"   name="image"  type="file" required  id="formFile" multiple />
+                              </div>
+
+
+                             
+
+                                 
+
+
+                           </div>
+
+
+
+
+
+                        </div>
+                     </div>
+                  </form>
+               </div>
+
+            </div>
+
+         </div>
+
+         <!-- / Content -->
+
+         <!-- Content wrapper -->
+      </div>
+   </div>
+   <!-- / Layout page -->
+</div>

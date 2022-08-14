@@ -1,0 +1,133 @@
+{{!--
+
+<body class="animsition"> --}}
+
+   <!-- Header -->
+   {{>user-header}}
+   {{!-- </header> --}}
+
+
+
+   <!-- breadcrumb -->
+   <div class="container-fluid">
+      <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-100 p-lr-0-lg">
+         <a href="/" class="stext-109 cl8 hov-cl1 trans-04">
+            Home
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+         </a>
+
+         <span class="stext-109 cl4">
+            Wishlist
+         </span>
+      </div>
+   </div>
+
+
+
+   <!-- wishlist -->
+   <div class="bg0 p-t-75 p-b-85">
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50" id="refresh-section">
+               <div class="m-l-25 m-r--38 m-lr-0-xl">
+                  <div class="wrap-table-shopping-cart">
+                     <table class="table-shopping-cart">
+                        <tr class="table_head">
+                           <th class="column-1">Product</th>
+                           <th class="column-2">Name</th>
+                           <th class="column-3">Price</th>
+                        </tr>
+
+                        {{#each wishproducts}}
+
+                        {{!-- <form action="/add_to_cart/{{this.product._id}}" method="post"> --}}
+                           <tr class="table_row">
+                              <td class="column-1">
+                                 <div class="how-itemcart1">
+                                    <img src="/multerImage/{{this.product.img_id.[0]}}" alt="IMG">
+                                 </div>
+                              </td>
+
+                              <td class="column-2">{{this.product.product_name}}</td>
+                              <td class="column-3">{{this.product.price}}</td>
+
+                              <td class="column-4 ">
+                                 {{!-- <button type="submit" class="btn btn-success d-flex justify-content-center">Add
+                                    to
+                                    cart</button> --}}
+                                 {{!-- <a href="/cart"><button type="button"
+                                       class="btn btn-success d-flex justify-content-center">Add to cart</button> </a>
+                                 --}}
+                                 <div class=" mt-3 btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m inc">
+                                    <a href="/delete_from_cart/{{this.product._id}}">
+                                       <div class="btn btn-secondary"><img src="/images/shopping-cart.png"
+                                             style="height:1.5rem;"></div>
+                                    </a>
+                                 </div>
+
+
+                                 <div class=" mt-3 btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m inc ">
+
+                                    <div class="btn btn-secondary"><i class="fs-25 zmdi zmdi-close"
+                                          style="height:1.5 rem; width:1.5rem"
+                                          onclick="removeProduct('{{this.product._id}}')"></i></div>
+                                    </a>
+
+                                 </div>
+
+
+                              </td>
+
+
+
+
+                           </tr>
+                           {{!--
+                        </form> --}}
+                        {{/each}}
+
+
+
+                     </table>
+                  </div>
+
+                  {{!-- --}}
+               </div>
+            </div>
+
+            {{!-- <div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
+               <div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
+                  <h4 class="mtext-109 cl2 p-b-30">
+                     Cart Totals
+               </div>
+            </div> --}}
+         </div>
+      </div>
+   </div>
+
+
+
+   {{>user-footer}}
+
+   <!-- Footer -->
+
+   <script>
+
+      function removeProduct(productId) {
+         $(document).ready(() => {
+            $.ajax({
+               url: '/remove_wishlist_product',         
+               data: {
+                  product: productId
+               },
+               method: "post",
+               success: (response) => {
+                 $("#refresh-section").load(location.href + " #refresh-section")                   
+               }
+            })
+         })
+      }
+   </script>
+
+
+   

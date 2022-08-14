@@ -1,0 +1,107 @@
+{{!-- <div class="row"> --}}
+{{>user-header-secondary}}
+   <div class="container">
+   <div class="col">
+      <div class="card mb-4 col-8 mx-auto" style="background-color: rgb(221, 225, 218);">
+         <div class="card-header py-3">
+            <h5 class="mb-0">User Details</h5>
+         </div>
+         <div class="card-body">
+            <form action="/my_profile" method="post">
+               <!-- 2 column grid layout with text inputs for the first and last names -->
+               <div class="row mb-4">
+                  <div class="col">
+                     <div class="form-outline">
+                        <input type="text" id="form7Example1" name="firstname" value="{{userDetails.firstname}}" class="form-control" />
+                        <label class="form-label" for="form7Example1">First name</label>
+                     </div>
+                  </div>
+                  <div class="col">
+                     <div class="form-outline">
+                        <input type="text" id="form7Example2" name="lastname" value="{{userDetails.lastname}}" class="form-control" />
+                        <label class="form-label" for="form7Example2">Last name</label>
+                     </div>
+                  </div>
+               </div>
+
+           
+
+
+               <!-- Email input -->
+               <div class="form-outline mb-4">
+                  <input type="email" id="form7Example5" name="email" value="{{userDetails.email}}" class="form-control" />
+                  <label class="form-label" for="form7Example5">Email</label>
+               </div>
+
+               <!-- Number input -->
+               <div class="form-outline mb-4">
+                  <input type="number" id="form7Example6" name="phone" value="{{userDetails.phone}}" class="form-control" />
+                  <label class="form-label" for="form7Example6">Phone</label>
+               </div>
+
+
+               <!-- Checkbox -->
+               <div class="form-check d-flex justify-content-center mb-2">
+                 
+                 
+                     <button type="submit" class="btn" style="background-color:rgb(15, 165, 68);"><span>Edit and save</span></button>
+          
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+
+   <div class="col-md-4 col-8 mb-4 mx-auto">
+      <div class="card mb-4">
+         <div class="card-header py-3" style="background-color:rgb(221, 225, 218);">
+            <h5 class="mb-0 d-flex justify-content-center">Change password</h5>
+         </div>
+         <div class="card-body d-flex justify-content-center">
+            
+            <a class="btn " style="background-color:rgb(15, 165, 68); width: 100px;" data-toggle="modal"
+               data-target="#exampleModal">click</a>
+            {{!-- <button type="button" class="btn btn-primary btn-lg btn-block">
+               Change password
+            </button> --}}
+         </div>
+      </div>
+   </div>
+   </div>
+{{!-- </div> --}}
+
+
+
+{{!-- modal --}}
+
+<div class="modal fade mt-5" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style='top:10vh;'
+   aria-hidden="true">
+   <div class="modal-dialog mt-5" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Change password</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form action="/change_password" method="post">
+               <div class="form-outline mb-4">
+                  <label class="form-label" for="form2Example2">Password</label>
+                  <input type="password" id="12345" name="password" required minlength="5" class="form-control" />
+
+                  {{!--passing object id --}}
+                  <input type="hidden" name="userId" value="{{userId}}">
+               </div>
+              
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </form>
+         </div>
+       
+  
+           
+     
+      </div>
+   </div>
+</div>
+{{>user-footer}}
