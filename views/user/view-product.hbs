@@ -16,9 +16,9 @@
 							<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
 
 							<div class="slick3 gallery-lb">
-								<div class="item-slick3" data-thumb="/multerImage/{{productDetails.img_id.[0]}}">
+								<div class="item-slick3" data-thumb="/multerImage/{{productDetails.img_id.[0]}}" >
 									<div class="wrap-pic-w pos-relative">
-										<img src="/multerImage/{{productDetails.img_id.[0]}}" alt="IMG-PRODUCT">
+										<img src="/multerImage/{{productDetails.img_id.[0]}}" alt="IMG-PRODUCT" style="border-radius: 46px;">
 
 										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
 											href="/multerImage/{{productDetails.img_id.[0]}}">
@@ -31,7 +31,7 @@
 
 								<div class="item-slick3" data-thumb="/multerImage/{{productDetails.img_id.[1]}}">
 									<div class="wrap-pic-w pos-relative">
-										<img src="/multerImage/{{productDetails.img_id.[1]}}" alt="IMG-PRODUCT">
+										<img src="/multerImage/{{productDetails.img_id.[1]}}" alt="IMG-PRODUCT" style="border-radius: 46px;">
 
 										<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
 											href="/multerImage/{{productDetails.img_id.[1]}}">
@@ -70,9 +70,9 @@
 								style="text-decoration: line-through;color: black;"> ₹ {{productDetails.actualprice}}.00</span>
 						</span>
 
-						<p class="stext-102 cl3 p-t-23">
+						{{!-- <p class="stext-102 cl3 p-t-23">
 							{{productDetails.description}}
-						</p>
+						</p> --}}
 
 						<!--  -->
 						<div class="p-t-33">
@@ -86,10 +86,12 @@
 
 									
 
-										<button
+										{{!-- <button
 											class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
 											Add to cart
-										</button>
+										</button> --}}
+										<button type="submit" class="btn hov-btn1 trans-04 size-101 stext-101 " style="background: rgb(22,134,2);background: linear-gradient(90deg, rgba(22,134,2,1) 3%, rgba(70,252,115,1) 51%, rgba(19,153,0,1) 97%);">
+											Add to cart</button>
 
 									</div>
 
@@ -133,12 +135,7 @@
 							<p class="stext-102 cl6">
 								Aenean sit amet gravida nisi. Nam fermentum est felis, quis feugiat nunc fringilla sit amet. Ut
 								in blandit ipsum. Quisque luctus dui at ante aliquet, in hendrerit lectus interdum. Morbi
-								elementum sapien rhoncus pretium maximus. Nulla lectus enim, cursus et elementum sed, sodales
-								vitae eros. Ut ex quam, porta consequat interdum in, faucibus eu velit. Quisque rhoncus ex ac
-								libero varius molestie. Aenean tempor sit amet orci nec iaculis. Cras sit amet nulla libero.
-								Curabitur dignissim, nunc nec laoreet consequat, purus nunc porta lacus, vel efficitur tellus
-								augue in ipsum. Cras in arcu sed metus rutrum iaculis. Nulla non tempor erat. Duis in egestas
-								nunc.
+						
 							</p>
 						</div>
 					</div>

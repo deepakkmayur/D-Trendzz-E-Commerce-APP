@@ -43,152 +43,226 @@ router.get("/", async (req, res) => {
   });
 });
 
-router.get("/login", (req, res) => {
-  if (!req.session.loggedIn) {
-    res.render("user/login", {
-      isLogin: true,
-      errorMessage: req.flash("key"),
-      blockMessage: req.flash("blocked"),
-      layout: "main-layout",
-    });
-  } else {
-    res.redirect("/");
-  }
-});
-
-router.get("/signup", (req, res) => {
-  if (!req.session.loggedIn) {
-    res.render("user/signup", { isSignup: true, layout: "main-layout" });
-  } else {
-    res.redirect("/");
-  }
-});
-
-router.post("/signup", (req, res) => {
-  req.body.isblockeduser = false;
-
-  userHelpers.doSignup(req.body).then((data) => {
-    if (data) {
-      res.redirect("/login");
-    } else {
-      res.redirect("/signup");
-    }
-  });
-});
-
-router.post("/login", (req, res) => {
-  userHelpers.doLogin(req.body).then((response) => {
-    if (response.status) {
-      req.session.loggedIn = true;
-      req.session.user = response.user;
-
-      if (!response.user.isblockeduser) {
-        res.redirect("/");
-      } else {
-        req.flash("blocked", "you have been blocked");
-
-        res.redirect("/login");
-      }
-    } else {
-      req.flash("key", "invalid email or password");
-      res.redirect("/login");
-    }
-  });
-});
-
-router.get("/user_logout", (req, res) => {
-  req.session.loggedIn = false;
-  // req.session.destroy((err)=>{
-  //   if(err) throw err
-  res.redirect("/");
-  // })
-});
-
-router.get("/userforgot_password", verifyLogin, (req, res) => {
-  res.render("user/forgotpassword", {
-    reset: true,
-    errorMessageReset: req.flash("error"),
-    layout: "main-layout",
-  });
-});
-
-router.post("/userforgot_password", (req, res) => {
-  userHelpers.postReset(req.body).then((data) => {
-    if (data) {
-      res.redirect("/");
-    } else {
-      console.log("second");
-      req.flash("error", "no email exist");
-
-      res.redirect("/userforgot_password");
-    }
-  });
-});
-
-router.get("/userforgot_password/:id", verifyLogin, (req, res) => {
-  userHelpers.getNewPass(req.params.id).then((user) => {
-    if (user) {
-      res.render("user/newpassword", {
-        objId: user._id,
+router.get("/login", (req, res, next) => {
+  try {
+    if (!req.session.loggedIn) {
+      res.render("user/login", {
+        isLogin: true,
+        errorMessage: req.flash("key"),
+        blockMessage: req.flash("blocked"),
         layout: "main-layout",
       });
     } else {
-      console.log("not found");
+      res.redirect("/");
     }
-  });
+
+  } catch (error) {
+    console.log(error);
+    next(error)
+  }
 });
 
-router.post("/new_password", (req, res) => {
-  // console.log(req.body);
-  userHelpers
-    .postNewPass(req.body)
-    .then((response) => {
-      if (response) {
+router.get("/signup", (req, res, next) => {
+  try {
+    if (!req.session.loggedIn) {
+      res.render("user/signup", { isSignup: true, layout: "main-layout" });
+    } else {
+      res.redirect("/");
+    }
+
+  } catch (error) {
+    console.log(error);
+    next(error)
+  }
+});
+
+router.post("/signup", (req, res, next) => {
+  try {
+    req.body.isblockeduser = false;
+
+    userHelpers.doSignup(req.body).then((data) => {
+      if (data) {
         res.redirect("/login");
       } else {
+        res.redirect("/signup");
+      }
+    });
+
+  } catch (error) {
+    console.log(error);
+    next(error)
+  }
+});
+
+router.post("/login", (req, res, next) => {
+  try {
+    userHelpers.doLogin(req.body).then((response) => {
+      if (response.status) {
+        req.session.loggedIn = true;
+        req.session.user = response.user;
+
+        if (!response.user.isblockeduser) {
+          res.redirect("/");
+        } else {
+          req.flash("blocked", "you have been blocked");
+
+          res.redirect("/login");
+        }
+      } else {
+        req.flash("key", "invalid email or password");
+        res.redirect("/login");
+      }
+    });
+
+  } catch (error) {
+    console.log(error);
+    next(error)
+  }
+});
+
+router.get("/user_logout", (req, res, next) => {
+  try {
+    req.session.loggedIn = false;
+
+    res.redirect("/");
+
+  } catch (error) {
+    console.log(error);
+    next(error)
+  }
+
+});
+
+router.get("/userforgot_password", verifyLogin, (req, res, next) => {
+  try {
+    res.render("user/forgotpassword", {
+      reset: true,
+      errorMessageReset: req.flash("error"),
+      layout: "main-layout",
+    });
+
+  } catch (error) {
+    console.log(error);
+    next(error)
+  }
+});
+
+router.post("/userforgot_password", (req, res, next) => {
+  try {
+    userHelpers.postReset(req.body).then((data) => {
+      if (data) {
+        res.redirect("/");
+      } else {
+        console.log("second");
+        req.flash("error", "no email exist");
+
         res.redirect("/userforgot_password");
       }
-    })
-    .catch((err) => {
-      redirect("/userforgot_password");
     });
+
+  } catch (error) {
+    console.log(error);
+    next(error)
+  }
 });
 
-router.get("/user_dashboard", verifyLogin, async (req, res) => {
-  let cartCount = await userHelpers.getCartcount(req.session.user._id);
-  let wishlistCount = await userHelpers.getWishlistcount(req.session.user._id);
-  //  console.log(cartCount,"------------cartcount----------");
-  res.render("user/user-dashboard", {
-    layout: "main-layout",
-    user: true,
-    isusersession: req.session.user,
-    userDashboard: true,
-    cartCount,
-    wishlistCount,
-  });
+router.get("/userforgot_password/:id", verifyLogin, (req, res, next) => {
+  try {
+    userHelpers.getNewPass(req.params.id).then((user) => {
+      if (user) {
+        res.render("user/newpassword", {
+          objId: user._id,
+          layout: "main-layout",
+        });
+      } else {
+        console.log("not found");
+      }
+    });
+
+  } catch (error) {
+    console.log(error);
+    next(error)
+  }
 });
 
-router.get("/my_profile", verifyLogin, async (req, res) => {
-  let userId = req.session.user._id;
-  let userDetails = await userHelpers.bringProfileData(userId);
+router.post("/new_password", (req, res, next) => {
+  try {
+    userHelpers
+      .postNewPass(req.body)
+      .then((response) => {
+        if (response) {
+          res.redirect("/login");
+        } else {
+          res.redirect("/userforgot_password");
+        }
+      })
+      .catch((err) => {
+        redirect("/userforgot_password");
+      });
 
-  res.render("user/my-profile", {
-    layout: "main-layout",
-    user: true,
-    isusersession: req.session.user,
-    isuserloggedin: req.session.loggedIn,
-    userId,
-    userDetails,
-  });
+  } catch (error) {
+    console.log(error);
+    next(error)
+  }
 });
 
-router.post("/my_profile", async (req, res) => {
-  let updateDetails = await userHelpers.profileUpdate(
-    req.session.user._id,
-    req.body
-  );
-  // console.log(updateDetails,"------------------------------------------");
-  res.redirect("/my_profile");
+router.get("/user_dashboard", verifyLogin, async (req, res, next) => {
+  try {
+    let cartCount = await userHelpers.getCartcount(req.session.user._id);
+    let wishlistCount = await userHelpers.getWishlistcount(req.session.user._id);
+    let orderCount = await userHelpers.getOrderCount(req.session.user._id)
+    let orderlistProducts = await userHelpers.getOrderedItems(req.session.user._id);
+    console.log(orderCount, "///////////orderCount////////////");
+    // console.log(orderlistProducts, "---------------------------------orderlistProducts///////////////");
+    res.render("user/user-dashboard", {
+      layout: "main-layout",
+      user: true,
+      isusersession: req.session.user,
+      userDashboard: true,
+      cartCount,
+      wishlistCount,
+      orderCount,
+      orderlistProducts,
+    });
+
+  } catch (error) {
+    console.log(error);
+    next(error)
+  }
+});
+
+router.get("/my_profile", verifyLogin, async (req, res, next) => {
+  try {
+    let userId = req.session.user._id;
+    let userDetails = await userHelpers.bringProfileData(userId);
+
+    res.render("user/my-profile", {
+      layout: "main-layout",
+      user: true,
+      isusersession: req.session.user,
+      isuserloggedin: req.session.loggedIn,
+      userId,
+      userDetails,
+    });
+
+  } catch (error) {
+    console.log(error);
+    next(error)
+  }
+});
+
+router.post("/my_profile", async (req, res, next) => {
+  try {
+    let updateDetails = await userHelpers.profileUpdate(
+      req.session.user._id,
+      req.body
+    );
+    res.redirect("/my_profile");
+
+  } catch (error) {
+    console.log(error);
+    next(error)
+  }
 });
 
 router.post("/change_password", (req, res) => {
@@ -236,9 +310,8 @@ router.get("/filter-shop", (req, res) => {
 });
 
 router.get("/view_product/:id", verifyLogin, (req, res) => {
-  console.log(req.params.id, "----req.params.id---------------------------");
-
-  userHelpers.viewEachproduct(req.params.id).then((productDetails) => {
+   userHelpers.viewEachproduct(req.params.id).then((productDetails) => {
+    console.log(productDetails, "----==--------------productDetails=======---------------------------");
     if (productDetails) {
       return res.render("user/view-product", {
         layout: "main-layout",
@@ -253,23 +326,33 @@ router.get("/view_product/:id", verifyLogin, (req, res) => {
   });
 });
 
+router.post('/ADD_TO_CART',async (req,res,next)=>{
+  try {
+    console.log(req.body.productID,"--------------------------------------ajax------");
+   await userHelpers.addTocart(req.session.user._id, req.body.productID)
+  } catch (error) {
+    console.log(error);
+    next(error)
+  }
+})
+
 router.post("/add_to_cart/:id", (req, res) => {
-  // console.log(req.body.qty,"//////////////////");
+  console.log(req.params.id,"-------------------------------normal----------------");
   userHelpers.addTocart(req.session.user._id, req.params.id).then((data) => {
     if (data) {
-      res.redirect("/");
+      res.redirect("/");              
     } else {
-      res.redirect("/error");
+      res.redirect("/error");     
     }
   });
 });
 
+
 router.get("/cart", verifyLogin, async (req, res) => {
+  console.log("----------------- cart here------------------------------------");
   let cartProducts = await userHelpers.getCartproducts(req.session.user._id);
   let total = await userHelpers.getCarttotal(req.session.user._id);
-
-  //  console.log("-----------cartproducts-----",cartProducts,"-----------cart total",total,"-------------------");
-
+  console.log(cartProducts,"----------------- cart here------------------------------------");
   res.render("user/cart", {
     layout: "main-layout",
     user: true,
@@ -283,45 +366,47 @@ router.get("/cart", verifyLogin, async (req, res) => {
 });
 
 router.post("/cart", (req, res) => {
-  // console.log("-----------------post cart here------------------------------------");
-  // console.log(req.body,"--------------------post cart req.body---------");
   userHelpers.changeProductQuantity(req.body).then(() => {
     res.json(response);
   });
 });
 
 router.get("/delete_from_cart/:id", verifyLogin, (req, res) => {
+  console.log("-------------------------delete_from_car-----------------------------------------------------------------------");
   userHelpers.deleteFromcart(req.session.user._id, req.params.id).then(() => {
     res.redirect("/cart");
   });
 });
 
-router.get("/proceed_to_checkout", verifyLogin, (req, res) => {
-  userHelpers.viewAddress(req.session.user._id).then((ADDRESS) => {
-    res.render("user/checkout-address", {
-      user: true,
-      layout: "main-layout",
-      checkout_address: true,
-      ADDRESS,
-      onlinepayment: true,
+router.get("/proceed_to_checkout", verifyLogin, async (req, res) => {
+  let cartitems = await userHelpers.getCartproducts(req.session.user._id);
+  if (cartitems.length != 0) {
+
+    userHelpers.viewAddress(req.session.user._id).then((ADDRESS) => {
+      res.render("user/checkout-address", {
+        user: true,
+        layout: "main-layout",
+        checkout_address: true,
+        ADDRESS,
+        onlinepayment: true,
+      });
     });
-  });
+  } else {
+    res.redirect('/cart')
+  }
 });
 
 router.post("/submit_address", (req, res) => {
-  // console.log("--------------post---submit_address-----------------------------------");
   userHelpers.addAddress(req.session.user._id, req.body).then((response) => {
-    // console.log(response,"-----------------------post- enter-submit address-------------------------------------");
     res.json(response);
   });
 });
 
 router.post("/proceed_to_checkout", async (req, res) => {
-  // console.log("----------------------------payment page first enter--------------------------------------------------------");
   let cartTotal = await userHelpers.getCarttotal(req.session.user._id);
-  // console.log(cartTotal,"----------------------------cartTotal----------------------------------------------------------");
+
   let cartitems = await userHelpers.getCartproducts(req.session.user._id);
-  // console.log(cartitems,"----------------------------cartitems----------------------------------------------------------");
+
   let address = await userHelpers.getAddress(
     req.session.user._id,
     req.body.time
@@ -348,7 +433,7 @@ router.post("/verify_payment", (req, res) => {
   userHelpers
     .verifyPayment(req.body)
     .then(() => {
-      userHelpers.changePaymentStatus(req.body["order[receipt]"]).then(() => {
+      userHelpers.changePaymentStatus(req.body["order[receipt]"], req.session.user._id).then(() => {
         console.log("payment success");
         res.json({ status: true });
       });
@@ -377,11 +462,10 @@ router.get("/orderlist_page", (req, res) => {
     });
 });
 
-router.get("/add-to-wishlist/:id", verifyLogin, (req, res) => {
-  // console.log(req.params.id,"----product id",req.session.user._id,"----user id");
-  userHelpers.addTowishlist(req.params.id, req.session.user._id).then(() => {
-    res.redirect("/");
-  });
+router.post("/add-to-wishlist", verifyLogin, (req, res) => {
+  console.log("reqqqqqqqqqqqqqqqqqq",req.body);
+  userHelpers.addTowishlist(req.body.productID, req.session.user._id)
+
 });
 
 router.get("/wishlist", verifyLogin, (req, res) => {

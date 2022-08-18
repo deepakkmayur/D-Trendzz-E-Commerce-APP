@@ -58,7 +58,7 @@ router.get("/admin_logout", (req, res) => {
 
 
 router.get("/add_product", (req, res) => {
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
  adminHelpers.findCategory().then((category)=>{   
  
    if (req.session.isadminLogged) {
@@ -73,9 +73,6 @@ router.get("/add_product", (req, res) => {
 router.post("/add_product", upload.array("image", 3), (req, res) => {
 
   const img_id = [];    
-
-  // console.log(req.files);
-
   req.files.forEach((element) => {              
     img_id.push(element.filename);
   });
@@ -186,6 +183,17 @@ adminHelpers.userManagement().then((userdetails)=>{
 
 
 
+router.get('/order_management',(req,res,next)=>{
+  console.log("/////allOrders 1/////")
+ adminHelpers.orderManagement().then((allOrders)=>{
+  console.log(allOrders,"/////allOrders 2/////");
+  console.log(allOrders[0].orderDetails,"/////allOrders 2/////");
+  res.render('admin/adminOrderManagement',{layout:"admin-main-layout",allOrders})
+ })
+})
+
+
+
 
 
 
@@ -218,7 +226,7 @@ router.get('/unblock_user/:id',(req,res)=>{
 router.get("/admin_viewOrder",async(req,res)=>{   
  if (req.session.isadminLogged) {
     let orderedProducts=await adminHelpers.bringOrderDetails(req.query.id)
-      console.log(orderedProducts[0].orderDetails.products,"---------------------------------------------------");
+      // console.log(orderedProducts[0].orderDetails.products,"---------------------------------------------------");
     res.render('admin/admin-viewOrder',{ layout: "admin-main-layout",orderedProducts })
   }
 })
@@ -233,10 +241,10 @@ router.get('/change_status',async (req,res)=>{
 })
 
 router.get('/view_userProduct',(req,res)=>{
-  console.log(req.query,"----------------------id----------------");
+  // console.log(req.query,"----------------------id----------------");
 
   userHelpers.viewEachproduct(req.params.id).then((productDetails) => {
-    console.log(productDetails,"--------productDetails----------------------------------"); 
+    // console.log(productDetails,"--------productDetails----------------------------------"); 
   })
 
 })

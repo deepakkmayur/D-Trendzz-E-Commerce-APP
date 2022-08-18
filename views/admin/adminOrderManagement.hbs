@@ -2,20 +2,20 @@
 <div class="layout-wrapper layout-content-navbar">
    <div class="layout-container">
       <!-- Menu -->
-      {{>aside}}
+         {{>aside}}
       <!-- / Menu -->
 
       <!-- Layout container -->
       <div class="layout-page">
          <!-- Navbar -->
-         {{>header}}
+            {{>header}}
 
          <!-- / Navbar -->
 
          <!-- Content wrapper -->
          <div class="content-wrapper">
             <!-- Content -->
-            <div class="card">
+          <div class="card">
                <h5 class="card-header">Table Basic</h5>
                <div class="table-responsive text-nowrap">
                   <table class="table">
@@ -24,12 +24,14 @@
                            <th>SL NO</th>
 
                            <th>DATE</th>
+                           <th>USER</th>
                            <th>MOBILE</th>
                            <th>PRICE</th>
-                           <th>PAYMENT</th>
+                           <th>PAYMENT METHOD</th>
 
                            <th>STATUS</th>
-                           <th>EDIT STATUS</th>
+                           <th></th>
+                         
                            <th>VIEW</th>
 
                         </tr>
@@ -38,12 +40,13 @@
 
 
                      <tbody class="table-border-bottom-0">
-                        {{#each orderedProducts}}
+                        {{#each allOrders}}
                         <tr>
 
                            <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{inc @index}}</strong> </td>
 
                            <td>{{this.orderDetails.date}}</td>
+                           <td>{{this.userData.[0].firstname}}</td>
 
 
                            <td>{{this.orderDetails.deliveryDetails.phone}}</td>
@@ -56,50 +59,66 @@
                            <td>{{this.orderDetails.status}}</td>
 
                            <td>
-                              {{#if this.cancelled}}
-                              <p>cancelled</p>
-                              {{else}}
-                              {{#if this.delivered}}
-                              <p>delivered</p>
-                              {{else}}
-
-                              <select class="btn btn-success text-white"  onchange="location= this.value;">
-                                 <option>Change Status</option>
-                                   <option
-                                    value="/admin/change_status?id={{this._id}}&status=pending">
-                                    pending</option>
-                                 <option
-                                    value="/admin/change_status?id={{this._id}}&status=shipped">
-                                    shipped</option>
-                                      <option
-                                    value="/admin/change_status?id={{this._id}}&status=out_for_delivery">
-                                    Out for delivery</option>
-                                 <option
-                                    value="/admin/change_status?id={{this._id}}&status=delivered">
-                                    delivered</option>
-                                 <option
-                                    value="/admin/change_status?id={{this._id}}&status=cancelled">
-                                    canceled</option>
-                              </select>
-                              {{/if}}
-                              {{/if}}
-
+                             
+                           
+               
 
                            </td>
                            <td>
+                         
+
+                         <!-- End Offcanvas -->
+                    <div class="col-lg-3 col-md-6">
+                      {{!-- <small class="text-light fw-semibold mb-3">End</small> --}}
+                      <div class="mt-3">
+                        <button
+                          class="btn btn-primary"
+                          type="button"
+                          data-bs-toggle="offcanvas"
+                          data-bs-target="#offcanvasEnd{{this._id}}"
+                          aria-controls="offcanvasEnd"
+                        >
+                          View
+                        </button>
 
 
-                               {{!-- <a href="/admin/view_userProduct?id={{this.orderDetails.products.[0].item}}"
-                                 class="btn btn-success">View</a> --}}
 
-                              <!-- Button trigger modal -->
-                              <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                 data-bs-target="#exampleModalCenter{{this._id}}">
-                                 View
-                              </button>
+
+                        <div
+                          class="offcanvas offcanvas-end"
+                          tabindex="-1"
+                          id="offcanvasEnd{{this._id}}"
+                          aria-labelledby="offcanvasEndLabel"
+                        >
+                          <div class="offcanvas-header">
+                            <h5 id="offcanvasEndLabel" class="offcanvas-title"></h5>
+                            <button
+                              type="button"
+                              class="btn-close text-reset"
+                              data-bs-dismiss="offcanvas"
+                              aria-label="Close"
+                            ></button>
+                          </div>
+                          <div class="col">       
+                          <div class="d-flex justify-content-center">
+                          <img height="70%" width="70%" src="/multerImage/{{this.orderDetails.products.product.img_id.[0]}}">
+                         </div>
+                         <div class="d-flex justify-content-center mt-5">
+                           <h4 style="">{{this.orderDetails.products.product.product_name}}</h4>
+                         </div>
+                         </div>
+                        </div>
+                      </div>
+                    </div>
+                           
+
+                     <!--/ End Offcanvas -->
+
+
+
 
                               <!-- Modal -->
-                              <div class="modal fade " id="exampleModalCenter{{this._id}}" tabindex="-1" role="dialog"
+                              {{!-- <div class="modal fade " id="exampleModalCenter{{this._id}}" tabindex="-1" role="dialog"
                                  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                  <div class="modal-dialog modal-dialog-centered" role="document" >
                                     <div class="modal-content" style="background-color:rgb(184, 219, 178);">
@@ -138,13 +157,14 @@
                                        {{!-- </div> --}}
                                     </div>
                                  </div>
-                              </div>
+                              </div> --}}
                              
                            </td>
 
 
                         </tr>
                         {{/each}}
+                        
                      </tbody>
 
 

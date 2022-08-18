@@ -24,6 +24,7 @@ app.set("view engine", "hbs");
 app.engine(
   "hbs",
   hbs.engine({
+    helpers: {inc: function (value, options) { return parseInt(value) + 1;}},             
     extname: "hbs",
     defaultLayout: false,
 
@@ -35,6 +36,7 @@ app.engine(
 // for handlebar operations
 handlebars.registerHelper("when", function (operand_1, operator, operand_2, options) {        
   var operators = {
+
     'eq': function (l, r) { return l == r; },
     'noteq': function (l, r) { return l != r; },
     'gt': function (l, r) { return Number(l) > Number(r); },
@@ -76,7 +78,7 @@ app.use("/admin", adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  // res.render('error')
+  res.render('error')
   next(createError(404));
 });
 

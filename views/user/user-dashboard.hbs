@@ -1,8 +1,7 @@
+<div class="container-fluid"
+    style="height:max-content;   background: rgb(194,195,195);background: linear-gradient(103deg, rgba(194,195,195,1) 7%, rgba(180,255,244,1) 71%, rgba(225,226,226,1) 100%);">
 
-
-<div class="container-fluid" style="height: 100vh;   background: rgb(194,195,195);background: linear-gradient(103deg, rgba(194,195,195,1) 7%, rgba(180,255,244,1) 71%, rgba(225,226,226,1) 100%);">
-
-<nav class="navbar navbar-expand-lg navbar-light bg-ligh">
+    <nav class="navbar navbar-expand-lg navbar-light bg-ligh">
         <div class="container" style="background-color:#f0ecec;">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynav"
                 aria-controls="mynav" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,12 +9,12 @@
             </button>
             <a class="navbar-brand" href="#">
                 <div class="d-flex">
-                    {{!-- <div class="d-flex align-items-center logo bg-purple">
+                    {{! <div class="d-flex align-items-center logo bg-purple">
                         <div class="fab fa-joomla h2 text-white"></div>
-                    </div> --}}
-                     <div class="d-flex align-items-center ">
-                        <img src="/images/D-trendzz logo.png" class="ms-3" style="height:2.5rem;">
-                        {{!-- <div class="fab fa-joomla h2 text-white"></div> --}}
+                    </div> }}
+                    <div class="d-flex align-items-center">
+                        <img src="/images/D-trendzz logo.png" class="ms-3" style="height:2.5rem;" />
+                        {{! <div class="fab fa-joomla h2 text-white"></div> }}
                     </div>
                     <div class="ms-3 d-flex flex-column">
                         <div class="h4">D-trendzz</div>
@@ -26,27 +25,15 @@
             <div class="collapse navbar-collapse" id="mynav">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Home <span
-                                class="fas fa-th-large px-1"></span></a>
-                    </li> 
-                    {{!-- <li class="nav-item">
-                        <a class="nav-link" href="#">Exclusive</a>
+                        <a class="nav-link active" aria-current="page" href="/">Home
+                            <span class="fas fa-th-large px-1"></span></a>
                     </li>
+             
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Collections</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Blogs</a>
-                    </li>  --}}
-                    {{!-- <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <div class="cart bg-purple">
-                                <span class="fas fa-shopping-cart text-white"></span>   
-                            </div>
-                        </a>
-                    </li> --}}
-                    <li class="nav-item ">
-                        <p class="nav-link "> Hello<span class=" text-uppercase"> {{isusersession.firstname}}</span> </p>
+                        <p class="nav-link">
+                            Hello<span class="text-uppercase">
+                                {{isusersession.firstname}}</span>
+                        </p>
                     </li>
                 </ul>
             </div>
@@ -59,17 +46,9 @@
                 <div id="sidebar" class="bg-purple">
                     <div class="h4 text-white">Account</div>
                     <ul>
-                        {{!-- <li class="active">
-                            <a href="#" class="text-decoration-none d-flex align-items-start">
-                                <div class="fas fa-box pt-2 me-3"></div>
-                                <div class="d-flex flex-column">
-                                    <div class="link">My Account</div>
-                                    <div class="link-desc">View & Manage orders and returns</div>
-                                </div>
-                            </a>
-                        </li> --}}
+                        
                         <li>
-                            <a href='/orderlist_page' class="text-decoration-none d-flex align-items-start">
+                            <a href="/orderlist_page" class="text-decoration-none d-flex align-items-start">
                                 <div class="fas fa-box-open pt-2 me-3"></div>
                                 <div class="d-flex flex-column">
                                     <div class="link">My Orders</div>
@@ -78,7 +57,7 @@
                             </a>
                         </li>
                         <li>
-                             <a href='/my_profile' class="text-decoration-none d-flex align-items-start">
+                            <a href="/my_profile" class="text-decoration-none d-flex align-items-start">
                                 <div class="fas fa-box-open pt-2 me-3"></div>
                                 <div class="d-flex flex-column">
                                     <div class="link">My profile</div>
@@ -87,7 +66,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href='/cart' class="text-decoration-none d-flex align-items-start">
+                            <a href="/cart" class="text-decoration-none d-flex align-items-start">
                                 <div class="fas fa-box-open pt-2 me-3"></div>
                                 <div class="d-flex flex-column">
                                     <div class="link">My Cart</div>
@@ -96,7 +75,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href='/wishlist' class="text-decoration-none d-flex align-items-start">
+                            <a href="/wishlist" class="text-decoration-none d-flex align-items-start">
                                 <div class="fas fa-box-open pt-2 me-3"></div>
                                 <div class="d-flex flex-column">
                                     <div class="link">My wishlist</div>
@@ -104,29 +83,35 @@
                                 </div>
                             </a>
                         </li>
-                     
+
                     </ul>
                 </div>
             </div>
             <div class="col-lg-9 my-lg-0 my-1">
-                <div id="main-content" class="bg-white border" style=" background: rgb(194,195,195);background: linear-gradient(103deg, rgba(194,195,195,1) 7%, rgba(180,255,244,1) 71%, rgba(225,226,226,1) 100%);">
+                <div id="main-content" class="bg-white border"
+                    style=" background: rgb(194,195,195);background: linear-gradient(103deg, rgba(194,195,195,1) 7%, rgba(180,255,244,1) 71%, rgba(225,226,226,1) 100%);">
                     <div class="d-flex flex-column">
-                     
-                        <div class="h5"><p class="nav-link "> Hello<span class=" text-uppercase"> {{isusersession.firstname}}</span> </p></div>   
+
+                        <div class="h5">
+                            <p class="nav-link">
+                                Hello<span class="text-uppercase">
+                                    {{isusersession.firstname}}</span>
+                            </p>
+                        </div>
                         <div>Logged in as: {{isusersession.email}}</div>
                     </div>
                     <div class="d-flex my-4 flex-wrap">
                         <div class="box me-4 my-1 bg-light">
                             <img src="https://www.freepnglogos.com/uploads/box-png/cardboard-box-brown-vector-graphic-pixabay-2.png"
-                                alt="">
+                                alt="" />
                             <div class="d-flex align-items-center mt-2">
                                 <div class="tag">Orders placed</div>
-                                <div class="ms-auto number ml-2">10</div>
+                                <div class="ms-auto number ml-2">{{orderCount}}</div>
                             </div>
                         </div>
                         <div class="box me-4 my-1 bg-light">
                             <img src="https://www.freepnglogos.com/uploads/shopping-cart-png/shopping-cart-campus-recreation-university-nebraska-lincoln-30.png"
-                                alt="">
+                                alt="" />
                             <div class="d-flex align-items-center mt-2">
                                 <div class="tag">Items in Cart</div>
                                 <div class="ms-auto number ml-2">{{cartCount}}</div>
@@ -134,120 +119,215 @@
                         </div>
                         <div class="box me-4 my-1 bg-light">
                             <img src="https://www.freepnglogos.com/uploads/love-png/love-png-heart-symbol-wikipedia-11.png"
-                                alt="">
+                                alt="" />
                             <div class="d-flex align-items-center mt-2">
                                 <div class="tag">Wishlist</div>
                                 <div class="ms-auto number ml-2">{{wishlistCount}}</div>
                             </div>
                         </div>
                     </div>
+
                     <div class="text-uppercase">My recent orders</div>
+
+                    {{#each orderlistProducts}}
                     <div class="order my-3 bg-light">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="d-flex flex-column justify-content-between order-summary">
+                        <div class="row d-flex flex-row justify-content-around">
+                            
+                            <div class="col-lg-4" style="">
+                                <div class="d-flex flex-column justify-content-between flex-wrap order-summary">
                                     <div class="d-flex align-items-center">
-                                        <div class="text-uppercase">Order #fur10001</div>
-                                        <div class="blue-label ms-auto text-uppercase">paid</div>
+                                        <div class="text-uppercase">Order : {{@index}}</div>
+                                        {{! <div class="blue-label ms-auto text-uppercase">paid</div> }}
                                     </div>
-                                    <div class="fs-8">Products #03</div>
-                                    <div class="fs-8">22 August, 2020 | 12:05 PM</div>
-                                    <div class="rating d-flex align-items-center pt-1">
-                                        <img src="https://www.freepnglogos.com/uploads/like-png/like-png-hand-thumb-sign-vector-graphic-pixabay-39.png"
-                                            alt=""><span class="px-2">Rating:</span>
-                                        <span class="fas fa-star"></span>
-                                        <span class="fas fa-star"></span>
-                                        <span class="fas fa-star"></span>
-                                        <span class="fas fa-star"></span>
-                                        <span class="far fa-star"></span>
+                                    <div class="fs-8">
+                                        <p style="font-size:20px; color: crimson;">Product
+                                            :{{this.orderDetails.products.product.product_name}}</p>
                                     </div>
+                                     <div class="fs-8">
+                                        <p style="font-size:15px;">Price :
+                                            {{this.orderDetails.products.product.price}}</p>
+                                    </div>
+                                    <div class="fs-8">
+                                        <p style="font-size:15px;">Quantity
+                                            :{{this.orderDetails.products.quantity}}</p>
+                                    </div>
+                                    <div class="fs-8" style="padding-bottom: 36px;">{{this.orderDetails.date}}</div>
+                                  
                                 </div>
+                                
                             </div>
-                            <div class="col-lg-8">
+                               <div style="height: 50px;;" ><img style="height:50px; margin-top: 60%;" src="/multerImage/{{this.orderDetails.products.product.img_id.[0]}}" ></div>
+                            <div class="col-lg-2">
                                 <div class="d-sm-flex align-items-sm-start justify-content-sm-between">
-                                    <div class="status">Status : Delivered</div>
-                                    <div class="btn btn-primary text-uppercase">order info</div>
+
+                                    <div class="">
+                                    </div>
+
+
+
+
+                                  
+
+                                    <!-- Large modal -->
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target=".bd-example-modal-lg{{this._id}}">Track Order</button>
+
+                                    <div class="modal fade bd-example-modal-lg{{this._id}} mt-5" tabindex="-1"
+                                        role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+
+                                                <section class="vh-100" style="background-color: #000000; ">
+                                                    <div class="container py-5 h-100" style="margin-top: 20px;">
+                                                        <div
+                                                            class="row d-flex justify-content-center align-items-center h-100">
+                                                            <div class="col-12">
+                                                                <div class="card card-stepper text-black"
+                                                                    style="border-radius: 16px;">
+
+                                                                    <div class="card-body p-5">
+
+                                                                        <div
+                                                                            class="d-flex justify-content-between align-items-center mb-5">
+                                                                            <div>
+                                                                                <h5 class="mb-0">Price
+                                                                                    <span
+                                                                                        class="text-primary font-weight-bold">
+                                                                                        ₹
+                                                                                        {{this.orderDetails.products.product.price}}</span>
+                                                                                </h5>
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                        <ul id="progressbar-2"
+                                                                            class="d-flex justify-content-between mx-0 mt-0 mb-5 px-0 pt-0 pb-2">
+
+                                                                            {{#if this.pending}}
+                                                                            <li class="step0 active text-center"
+                                                                                id="step1"></li>
+                                                                            <li class="step0 text-muted text-end"
+                                                                                id="step2"></li>
+                                                                            <li class="step0 text-muted text-end"
+                                                                                id="step3"></li>
+                                                                            <li class="step0 text-muted text-end"
+                                                                                id="step4"></li>
+                                                                            {{/if}}
+
+                                                                            {{#if this.shipped}}
+                                                                            <li class="step0 active text-center"
+                                                                                id="step1"></li>
+                                                                            <li class="step0 active text-center"
+                                                                                id="step2"></li>
+                                                                            <li class="step0 text-muted text-end"
+                                                                                id="step3"></li>
+                                                                            <li class="step0 text-muted text-end"
+                                                                                id="step4"></li>
+                                                                            {{/if}}
+
+                                                                            {{#if this.out_for_delivery}}
+                                                                            <li class="step0 active text-center"
+                                                                                id="step1"></li>
+                                                                            <li class="step0 active text-center"
+                                                                                id="step2"></li>
+                                                                            <li class="step0 active text-center"
+                                                                                id="step3"></li>
+                                                                            {{! <li class="step0 active text-center"
+                                                                                id="step1"></li> }}
+                                                                            <li class="step0 text-muted text-end"
+                                                                                id="step4"></li>
+                                                                            {{/if}}
+
+                                                                            {{#if this.delivered}}
+                                                                            <li class="step0 active text-center"
+                                                                                id="step1"></li>
+                                                                            <li class="step0 active text-center"
+                                                                                id="step2"></li>
+                                                                            <li class="step0 active text-center"
+                                                                                id="step3"></li>
+                                                                            <li class="step0 active text-center"
+                                                                                id="step4"></li>
+                                                                            {{/if}}
+
+                                                                        </ul>
+                                                                        {{#if this.cancelled}}
+                                                                        <h1 class="d-flex justify-content-center">
+                                                                            This order is no-longer available</h1>
+                                                                        {{else}}
+                                                                        <div class="d-flex justify-content-between">
+                                                                            <div class="d-lg-flex align-items-center">
+                                                                                <i
+                                                                                    class="fas fa-clipboard-list fa-3x me-lg-4 mb-3 mb-lg-0"></i>
+                                                                                <div>
+                                                                                    <p class="fw-bold mb-1">Order
+                                                                                    </p>
+                                                                                    <p class="fw-bold mb-0">pending
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="d-lg-flex align-items-center">
+                                                                                <i
+                                                                                    class="fas fa-box-open fa-3x me-lg-4 mb-3 mb-lg-0"></i>
+                                                                                <div>
+                                                                                    <p class="fw-bold mb-1">Order
+                                                                                    </p>
+                                                                                    <p class="fw-bold mb-0">Shipped
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="d-lg-flex align-items-center">
+                                                                                <i
+                                                                                    class="fas fa-shipping-fast fa-3x me-lg-4 mb-3 mb-lg-0"></i>
+                                                                                <div>
+                                                                                    <p class="fw-bold mb-1">Order
+                                                                                    </p>
+                                                                                    <p class="fw-bold mb-0">Out for
+                                                                                        delivery</p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="d-lg-flex align-items-center">
+                                                                                <i
+                                                                                    class="fas fa-box-open fa-3x me-lg-4 mb-3 mb-lg-0"></i>
+                                                                                <div>
+                                                                                    <p class="fw-bold mb-1">Order
+                                                                                    </p>
+                                                                                    <p class="fw-bold mb-0">
+                                                                                        Delivered</p>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                        {{/if}}
+
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
-                                <div class="progressbar-track">
+                                {{!-- <div class="progressbar-track">
                                     <ul class="progressbar">
-                                        <li id="step-1" class="text-muted green">
-                                            <span class="fas fa-gift"></span>
-                                        </li>
-                                        <li id="step-2" class="text-muted green">
-                                            <span class="fas fa-check"></span>
-                                        </li>
-                                        <li id="step-3" class="text-muted green">
-                                            <span class="fas fa-box"></span>
-                                        </li>
-                                        <li id="step-4" class="text-muted green">
-                                            <span class="fas fa-truck"></span>
-                                        </li>
-                                        <li id="step-5" class="text-muted green">
-                                            <span class="fas fa-box-open"></span>
-                                        </li>
+
                                     </ul>
                                     <div id="tracker"></div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
-                    <div class="order my-3 bg-light">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="d-flex flex-column justify-content-between order-summary">
-                                    <div class="d-flex align-items-center">
-                                        <div class="text-uppercase">Order #fur10001</div>
-                                        <div class="green-label ms-auto text-uppercase">cod</div>
-                                    </div>
-                                    <div class="fs-8">Products #03</div>
-                                    <div class="fs-8">22 August, 2020 | 12:05 PM</div>
-                                    <div class="rating d-flex align-items-center pt-1">
-                                        <img src="https://www.freepnglogos.com/uploads/like-png/like-png-hand-thumb-sign-vector-graphic-pixabay-39.png"
-                                            alt=""><span class="px-2">Rating:</span>
-                                        <span class="fas fa-star"></span>
-                                        <span class="fas fa-star"></span>
-                                        <span class="fas fa-star"></span>
-                                        <span class="fas fa-star"></span>
-                                        <span class="far fa-star"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-8">
-                                <div class="d-sm-flex align-items-sm-start justify-content-sm-between">
-                                    <div class="status">Status : Delivered</div>
-                                    <div class="btn btn-primary text-uppercase">order info</div>
-                                </div>
-                                <div class="progressbar-track">
-                                    <ul class="progressbar">
-                                        <li id="step-1" class="text-muted green">
-                                            <span class="fas fa-gift"></span>
-                                        </li>
-                                        <li id="step-2" class="text-muted">
-                                            <span class="fas fa-check"></span>
-                                        </li>
-                                        <li id="step-3" class="text-muted">
-                                            <span class="fas fa-box"></span>
-                                        </li>
-                                        <li id="step-4" class="text-muted">
-                                            <span class="fas fa-truck"></span>
-                                        </li>
-                                        <li id="step-5" class="text-muted">
-                                            <span class="fas fa-box-open"></span>
-                                        </li>
-                                    </ul>
-                                    <div id="tracker"></div>
-                                </div>
-                            </div>
-                        </div>
 
+                    {{/each}}
 
-                        
-                    </div>
                 </div>
             </div>
         </div>
 
     </div>
 
-
-    </div>
+</div>

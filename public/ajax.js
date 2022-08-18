@@ -34,3 +34,25 @@ function removeProduct(productId) {
    })
 }
 
+
+function addToWishlist(productID){
+   $.ajax({
+      url:'/add-to-wishlist',
+      data:{productID},
+      method:'post',
+      success:(res)=>{
+         
+      }
+   })
+}
+
+function addToCart(productID){
+   $.ajax({
+      url:'/ADD_TO_CART',
+      data:{productID},
+      method:'post',
+      success:()=>{
+         
+      }
+   })
+}

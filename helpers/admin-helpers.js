@@ -200,6 +200,44 @@ module.exports = {
     });
   },
 
+
+
+  orderManagement:()=>{
+    try {
+      return new Promise(async (resolve,reject)=>{
+          let orders=await db.get().collection(collection.orderCollection).aggregate([
+       
+            {
+              $match: {}
+          }, {
+              $unwind: {
+                  path: '$orderDetails.products'
+              }
+          },
+           {
+              $lookup: {
+                  from: collection.userCollection,
+                  localField: 'userId',
+                  foreignField: '_id',
+                  as: 'userData'
+              }
+          }, 
+          ]).toArray()
+          console.log("0000000000000000000000000000000000");
+          console.log(orders[0].userData,"000000000000000000000000000000");
+          
+          resolve(orders)
+      })
+      
+    } catch (error) {
+      console.log(error);
+      next(error)
+    }
+  },
+
+
+
+
   blockUser: (id) => {
     return new Promise(async (resolve, reject) => {
       const block = await db
