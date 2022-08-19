@@ -140,34 +140,6 @@
                   </ul>
                </div>
 
-
-               {{!-- <div class="filter-col4 p-b-27">
-                  <div class="mtext-102 cl2 p-b-15">
-                     Tags
-                  </div>
-
-                  <div class="flex-w p-t-4 m-r--5">
-                     <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-                        Fashion
-                     </a>
-
-                     <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-                        Lifestyle
-                     </a>
-
-                     <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-                        Denim
-                     </a>
-
-                     <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-                        Streetstyle
-                     </a>
-
-                     <a href="#" class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
-                        Crafts
-                     </a>
-                  </div>
-               </div> --}}
             </div>
          </div>
       </div>
@@ -410,55 +382,4 @@
 
 
 
-<script>
-   function filterWomen(CATEGORY){
-     $(document).ready(()=>{
-    $.ajax(
-      {
-               url: '/category_filter',
-               data: {
-                  category:CATEGORY
-               },
-               method: "post",
-               success: (response) => {
-                 $("#refresh-section").load(location.href + " #refresh-section")                       
-               }
-            }
-    )
-   })
-   }
-
-
-    function filterMen(CATEGORY){
-     $(document).ready(()=>{
-    $.ajax(
-      {
-               url: '/category_filter',
-               data: {
-                  category:CATEGORY
-               },
-               method: "post",
-               success: (response) => {
-                 $("#refresh-section").load(location.href + " #refresh-section")                       
-               }
-            }
-    )
-   })
-   }
-
-   function allProducts(){
-      $(document).ready(()=>{
-         $.ajax(
-            {
-              url:'/shop' ,
-               method: "get",
-                 success: (response) => {
-                  console.log("success")
-                 $("#refresh-section").load(location.href + " #refresh-section")                       
-               }
-            }
-         )
-      })
-   }
- 
-</script>
+<script src="/ajax.js"></script>

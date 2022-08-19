@@ -1,0 +1,119 @@
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar">
+   <div class="layout-container">
+      <!-- Menu -->
+          {{>aside}}
+      <!-- / Menu -->
+
+      <!-- Layout container -->
+      <div class="layout-page">
+         <!-- Navbar --> 
+          {{>header}}
+
+         <!-- / Navbar -->
+
+         <!-- Content wrapper -->
+         <div class="content-wrapper">
+            <!-- Content -->
+               {{!-- <div class="row mb-4">
+  <!-- Browser Default -->
+  <div class="col-md mb-4 mb-md-0">
+    <div class="card">
+      <h5 class="card-header">Browser Default</h5>
+      <div class="card-body">
+        <form class="browser-default-validation">
+          <div class="mb-3">
+            <label class="form-label" for="basic-default-name">Name</label>
+            <input type="text" class="form-control" id="basic-default-name" placeholder="John Doe" required />
+          </div>
+ 
+          <div class="mb-3">
+            <label class="form-label" for="basic-default-country">Country</label>
+            <select class="form-select" id="basic-default-country" required>
+              <option value="">Select Country</option>
+              <option value="usa">USA</option>
+              <option value="uk">UK</option>
+              <option value="france">France</option>
+              <option value="australia">Australia</option>
+              <option value="spain">Spain</option>
+            </select>
+          </div>
+ 
+          <div class="mb-3">
+            <label class="d-block form-label">Gender</label>
+            <div class="form-check mb-2">
+              <input type="radio" id="basic-default-radio-male" name="basic-default-radio" class="form-check-input" required />
+              <label class="form-check-label" for="basic-default-radio-male">Male</label>
+            </div>
+            <div class="form-check">
+              <input type="radio" id="basic-default-radio-female" name="basic-default-radio" class="form-check-input" required />
+              <label class="form-check-label" for="basic-default-radio-female">Female</label>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="basic-default-bio">Bio</label>
+            <textarea class="form-control" id="basic-default-bio" name="basic-default-bio" rows="3" required></textarea>
+          </div>
+    
+          <div class="row">
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div> --}}
+
+
+
+
+  
+  <div class="col-sm-6 col-xl-12">
+  <div class="container-fluid mt-5">
+    <div class="container-fluid mt-5">
+      <div class=" rounded h-100 p-4">
+
+        <div class="container ">
+
+          <form action="/admin/generate_coupon" method="POST">
+
+
+            <div class="mt-5 mb-3">
+              <label for="" class="form-label">Coupon code</label>
+              <input type="text" class="form-control" required name="coupon_code" id="exampleInputUsername">
+            </div>
+            <div class="mt-5 mb-3">
+              <label for="" class="form-label">Minimum price</label>
+              <input type="number" class="form-control" required name="minimum_price" id="exampleInputUsername">
+            </div>
+             <div class="mb-3">
+            <label class="form-label" for="basic-default-bio">Coupon description</label>
+            <textarea class="form-control" id="basic-default-bio"  name="coupon_description"  rows="3" required></textarea>
+          </div>
+            <div class="mt-5 mb-3">
+              <label for="" class="form-label">discount</label>
+              <input type="number" class="form-control" required minlength="2" maxlength="2" onclick="return alert('discount should be in between 0 and 100 ')"  name="discount" id="exampleInputUsername">
+            </div>
+            <div class="mt-5 mb-3">
+              <label for="" class="form-label">Valid from</label>
+              <input type="date" class="form-control" name="validfrom" required id="exampleInputUsername">
+            </div>
+             <div class="mt-5 mb-3">
+              <label for="" class="form-label">Valid till</label>
+              <input type="date" class="form-control" name="validtill" required id="exampleInputUsername">
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+            <!-- Content wrapper -->
+         </div>
+      </div>
+      <!-- / Layout page -->
+   </div>
+</div>

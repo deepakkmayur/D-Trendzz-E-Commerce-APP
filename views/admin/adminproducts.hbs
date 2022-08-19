@@ -40,6 +40,7 @@
                               <th>SL NO</th>
                               <th>NAME</th>
                               <th>PRICE</th>
+                              <th>DISCOUNT</th>
                               <th>BRAND</th>
                               <th>IMAGES</th>
                              
@@ -57,6 +58,7 @@
                               </td>
                               <td>{{this.product_name}}</td>     
                                <td>{{this.price}}</td>
+                               <td>{{this.discount}}</td>
                                 <td>{{this.brand}}</td>
                             
                               <td>
@@ -70,15 +72,7 @@
                                     </li>
                                     {{/each}}
 
-                                    {{!-- <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                       class="avatar avatar-xs pull-up" title="Sophia Wilkerson">
-                                       <img src="/admin-assets/assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
-                                    </li>
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                       class="avatar avatar-xs pull-up" title="Christina Parker">
-                                       <img src="/admin-assets/assets/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
-                                    </li> --}}
-                                    
+                                  
                                  </ul>
                               </td>
                                <td>{{this.lookup_category.[0].category_name}}</td>

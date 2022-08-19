@@ -326,10 +326,12 @@
 							<span class="stext-105 cl3 font-weight-bold  " style="color:#7a7a7a ;">
 								{{this.brand}}
 							</span>
-							<span class="fs-15 font-weight-bold text-danger">
-								₹ {{this.price}}.00 <span class="ml-3"
-									style="text-decoration: line-through; color: rgb(2, 2, 2);"> ₹ {{this.actualprice}}.00</span>
+							<span class="fs-17 font-weight-bold text-danger">
+								₹ {{this.price}}.00 <span class="ml-3" style="text-decoration: line-through; color: rgb(2, 2, 2);">₹ {{this.actualprice}}.00</span>
+								<span style="font-size:20px; font-family: fantasy;" class="ml-2"> {{this.discount}} % Off</span>
 							</span>
+							
+
 							{{!-- <span class="stext-105 cl3 text-secondary" style="font-size: .8em">
 								{{this.description}}
 							</span> --}}
@@ -364,16 +366,6 @@
 				</div>
 			</div>
 			{{/each}}
-
-
-
-
-
-
-
-
-
-
 
 
 		</div>

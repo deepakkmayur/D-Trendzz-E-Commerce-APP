@@ -34,21 +34,13 @@
 
 								<label class="form-check-label" for="flexRadioDefault1">
 									<p style=" font-size:2rem;  font-family:Courier New">
-										{{this.address.firstname}},{{this.address.address}},{{this.address.city}},{{this.address.state}},{{this.address.country}},{{this.address.pincode}},{{this.address.phone}},{{this.address.email}}
+										{{this.address.firstname}},<br>
+										{{this.address.address}},{{this.address.city}},<br>{{this.address.state}},{{this.address.country}},<br>{{this.address.pincode}},<br>{{this.address.email}}<br>{{this.address.phone}}
 									</p>
 								</label>
 							</div>
 							{{/each}}
 
-{{!-- 
-
-							<div class="paymnet" style="webkit-box-sizing: border-box;
-                                width: 50rem;
-                                  height: 17rem;
-                               border: 0.5rem solid #969696;
-                             background: #f8f9fa;
-                               margin: 0rem
-										 margin-left: 1.5rem;"> --}}
 
 								<h4 style="color:red;">Payment method</h4>
 								<div class="form-check" style="padding-top: 1.5rem;">
@@ -72,7 +64,7 @@
 
 
 						<div class="">
-							<button type="button" style="background-color: rgba(1, 255, 65, 0.747) ; margin-top: 3rem;"
+							<button type="button" class="btn" style="background-color: rgba(1, 255, 65, 0.747) ; margin-top: 3rem;"
 								onclick="submitpayment(event)">
 								Proceed to payment</button>
 						</div>
@@ -89,7 +81,7 @@
 
 
 
-			<form class="form-horizontal" id="submitaddress">
+			<form action="/submit_address" method="post" class="form-horizontal" id="submitaddress">
 
 				<!--SHIPPING METHOD-->
 				<div class="panel panel-info">
@@ -104,7 +96,7 @@
 						<div class="form-group">
 							<div class="col-md-6 col-xs-12">
 								<strong>First Name:</strong>
-								<input type="text" name="firstname" class="form-control" value="" />
+								<input type="text" name="firstname" required minlength="4" class="form-control" value="" />
 							</div>
 							<div class="span1"></div>
 							<div class="col-md-6 col-xs-12">
@@ -115,19 +107,19 @@
 						<div class="form-group">
 							<div class="col-md-12"><strong>Address:</strong></div>
 							<div class="col-md-12">
-								<input type="text" name="address" class="form-control" value="" />
+								<input type="text" name="address" required class="form-control" value="" />
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-md-12"><strong>City:</strong></div>
 							<div class="col-md-12">
-								<input type="text" name="city" class="form-control" value="" />
+								<input type="text" name="city" required class="form-control" value="" />
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-md-12"><strong>State:</strong></div>
 							<div class="col-md-12">
-								<input type="text" name="state" class="form-control" value="" />
+								<input type="text" name="state" required class="form-control" value="" />
 							</div>
 						</div>
 						<div class="form-group">
@@ -139,26 +131,26 @@
 						<div class="form-group">
 							<div class="col-md-12"><strong>Pincode / Postal Code:</strong></div>
 							<div class="col-md-12">
-								<input type="text" name="pincode" class="form-control" value="" />
+								<input type="number" name="pincode" required class="form-control" value="" />
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-md-12"><strong>Phone Number:</strong></div>
-							<div class="col-md-12"><input type="text" name="phone" class="form-control" value="" />
+							<div class="col-md-12"><input type="text" name="phone"  required minlength="10" maxlength="10" class="form-control" value="" />
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-md-12"><strong>Email Address:</strong></div>
-							<div class="col-md-12"><input type="text" name="email" class="form-control" value="" />
+							<div class="col-md-12"><input type="email" name="email" required class="form-control" value="" />
 							</div>
 						</div>
 						{{!-- <div class="form-group">
 							<div class="col-md-12"> --}}
-								<button type="submit" class="btn" onclick="selectaddress(event)"
+								<button type="submit" class="btn" 
 									style="background-color:rgba(1, 255, 65, 0.747)">Submit</button>
 								{{!--
 							</div> --}}
-							<a href="/orderlist_page" class="btn btn-primary">Order List</a>
+						
 
 						</div>
 					</div>
@@ -177,18 +169,7 @@
 
 <script>
 
-	function selectaddress(event) {
-		event.preventDefault()
-		console.log(event)
-		$.ajax({
-			url: '/submit_address',
-			data: $("#submitaddress").serialize(),
-			method: 'post',
-			success: (response) => {
-				$("#refresh-address").load(location.href + " #refresh-address");
-			}
-		})
-	}
+
 
 	function submitpayment(event) {
 		event.preventDefault()

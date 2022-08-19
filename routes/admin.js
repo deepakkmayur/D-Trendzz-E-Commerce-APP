@@ -1,4 +1,5 @@
 const express = require("express");
+const { Db } = require("mongodb");
 const router = express.Router();            
 const objectId = require('mongodb').ObjectId
 const adminHelpers = require("../helpers/admin-helpers");
@@ -7,7 +8,13 @@ const userHelpers = require("../helpers/user-helpers");
 const upload = require("../middleware/multer");
 
 
-
+const verifyLogin = function (req, res, next) {
+  if (req.session.isadminLogged) {
+    next();
+  } else {
+    res.redirect("/admin/login");
+  }
+};
 
 
 router.get("/", function (req, res) {
@@ -83,7 +90,7 @@ router.post("/add_product", upload.array("image", 3), (req, res) => {
 
   adminHelpers.doAddproduct(req.body).then((data) => {                                          
     if (data) {
-      // console.log(data);
+     
 
       res.redirect("/admin/admin_product");
     } else {
@@ -98,8 +105,7 @@ router.get("/admin_product", (req, res) => {
  
   if (req.session.isadminLogged) {
     adminHelpers.showProduct().then((products) => {
-      // console.log("prod-------------",products[7].lookup_category[0].category_name)
-      // res.send('success 2')
+     
       res.render("admin/adminproducts", {
         layout: "admin-main-layout",
          products,
@@ -170,7 +176,7 @@ router.get("/delete_product/:id", (req, res) => {
 });
 
 
-router.get('/user_management',(req,res)=>{
+router.get('/user_management', verifyLogin,(req,res)=>{
 adminHelpers.userManagement().then((userdetails)=>{
   if(userdetails){
     res.render('admin/adminUsermanagement',{ layout: "admin-main-layout",userdetails })
@@ -183,7 +189,7 @@ adminHelpers.userManagement().then((userdetails)=>{
 
 
 
-router.get('/order_management',(req,res,next)=>{
+router.get('/order_management',verifyLogin,(req,res,next)=>{
   console.log("/////allOrders 1/////")
  adminHelpers.orderManagement().then((allOrders)=>{
   console.log(allOrders,"/////allOrders 2/////");
@@ -248,6 +254,61 @@ router.get('/view_userProduct',(req,res)=>{
   })
 
 })
+
+router.get('/coupon_management',verifyLogin,async (req,res,next)=>{
+try {
+   const couponDetails=await adminHelpers.getCouponDetails()
+  //  console.log(couponDetails,"------------------------------------------------------");
+  res.render('admin/couponManagement',{ layout: "admin-main-layout",couponDetails })
+  
+} catch (error) {
+  console.log(error);
+  next(error)
+}
+})
+
+router.get('/generate_coupon',verifyLogin,(req,res,next)=>{
+  try {
+ 
+    res.render('admin/generateCoupon',{ layout: "admin-main-layout" })
+    
+  } catch (error) {
+    console.log(error);
+    next(error)
+  }
+  })
+
+router.post('/generate_coupon',async(req,res,next)=>{    
+  try {
+    // console.log(req.body,"------------------------------generate_coupon");
+    res.redirect('/admin/coupon_management')
+     await adminHelpers.generateCoupon(req.body)
+    
+  } catch (error) {
+    console.log(error);
+    next(error)
+  }
+
+})
+
+
+router.get('/delete_coupon',async(req,res,next)=>{    
+  try {
+    console.log(("--------------------------------here"));
+    
+    await adminHelpers.deleteCoupon(req.query.id)
+    res.redirect('/admin/coupon_management')
+    
+  } catch (error) {
+    console.log(error);
+    next(error)
+  }
+
+})
+
+
+
+
 
 
 router.get("/error", (req, res) => {

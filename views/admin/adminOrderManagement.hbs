@@ -53,7 +53,7 @@
 
 
 
-                           <td>{{this.orderDetails.products.product.price}}</td>
+                           <td>{{this.orderDetails.products.sum}}</td>
 
                            <td>{{this.orderDetails.paymentMethod}}</td>
                            <td>{{this.orderDetails.status}}</td>
@@ -81,16 +81,13 @@
                           View
                         </button>
 
-
-
-
                         <div
                           class="offcanvas offcanvas-end"
                           tabindex="-1"
                           id="offcanvasEnd{{this._id}}"
                           aria-labelledby="offcanvasEndLabel"
                         >
-                          <div class="offcanvas-header">
+                          <div class="offcanvas-header" >
                             <h5 id="offcanvasEndLabel" class="offcanvas-title"></h5>
                             <button
                               type="button"
@@ -101,63 +98,26 @@
                           </div>
                           <div class="col">       
                           <div class="d-flex justify-content-center">
-                          <img height="70%" width="70%" src="/multerImage/{{this.orderDetails.products.product.img_id.[0]}}">
+                          <img height="50%" width="50%" src="/multerImage/{{this.orderDetails.products.product.img_id.[0]}}">
                          </div>
                          <div class="d-flex justify-content-center mt-5">
-                           <h4 style="">{{this.orderDetails.products.product.product_name}}</h4>
+                           <h4 style="color: red;">{{this.orderDetails.products.product.product_name}}</h4>
                          </div>
+                         <div class="d-flex justify-content-center mt-2">
+                           <h4 >price : {{this.orderDetails.products.product.price}}</h4>
+                         </div>
+                          <div class="d-flex justify-content-center mt-2">
+                           <h4 >quantity : {{this.orderDetails.products.quantity}}</h4>
+                         </div>
+
+                        
                          </div>
                         </div>
                       </div>
                     </div>
-                           
+                          
 
                      <!--/ End Offcanvas -->
-
-
-
-
-                              <!-- Modal -->
-                              {{!-- <div class="modal fade " id="exampleModalCenter{{this._id}}" tabindex="-1" role="dialog"
-                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                 <div class="modal-dialog modal-dialog-centered" role="document" >
-                                    <div class="modal-content" style="background-color:rgb(184, 219, 178);">
-                                       <div class="modal-header">
-                                          <h5 class="modal-title" id="exampleModalLongTitle">View Product</h5>
-                                          <button type="button" class="close" data-bs-dismiss="modal" aria-bs-label="Close">
-                                             <span aria-hidden="true">&times;</span>
-                                          </button>
-                                       </div>
-                                       <div class="modal-body">       
-                                          <table style="border-spacing: 100px;width:100%;height:100%">
-                                              <thead>
-                                       <tr style="border: 1px solid rgb(73, 70, 70); color: black;">
-                                          <th>Product name</th>
-                                          <th>Price</th>
-                                          <th>User contact details</th>
-                                               
-                                          
-                                       </tr>
-                                      </thead>
-                                      <tbody>
-                                       <tr style="color:rgb(129, 126, 126) ;font-size: 20px;">
-                                          <td>{{this.orderDetails.products.[0].product.product_name}}</td>
-                                          <td>{{this.orderDetails.totalAmount}}</td>
-                                          <td>{{this.orderDetails.deliveryDetails.phone}}</td>
-                                          <td></td>
-                                       </tr>
-                                      
-                                      </tbody>
-                                      </table>
-                                       </div>
-                                       {{!-- <div class="modal-footer"> --}}
-                                          {{!-- <button type="button" class="btn btn-secondary" --}}
-                                             {{!-- data-bs-dismiss="modal">Close</button> --}}
-                                          {{!-- <button type="button" class="btn btn-primary">Save changes</button> --}}
-                                       {{!-- </div> --}}
-                                    </div>
-                                 </div>
-                              </div> --}}
                              
                            </td>
 

@@ -56,3 +56,55 @@ function addToCart(productID){
       }
    })
 }
+
+
+function filterWomen(CATEGORY){
+   $(document).ready(()=>{
+  $.ajax(
+    {
+             url: '/category_filter',
+             data: {
+                category:CATEGORY
+             },
+             method: "post",
+             success: (response) => {
+               $("#refresh-section").load(location.href + " #refresh-section")                       
+             }
+          }
+  )
+ })
+ }
+
+
+  function filterMen(CATEGORY){
+   $(document).ready(()=>{
+  $.ajax(
+    {
+             url: '/category_filter',
+             data: {
+                category:CATEGORY
+             },
+             method: "post",
+             success: (response) => {
+               $("#refresh-section").load(location.href + " #refresh-section")                       
+             }
+          }
+  )
+ })
+ }
+
+ function allProducts(){
+    $(document).ready(()=>{
+       $.ajax(
+          {
+            url:'/shop' ,
+             method: "get",
+               success: (response) => {
+                console.log("success")
+               $("#refresh-section").load(location.href + " #refresh-section")                       
+             }
+          }
+       )
+    })
+ }
+
