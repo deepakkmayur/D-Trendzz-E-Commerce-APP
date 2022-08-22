@@ -32,7 +32,7 @@
 							<tr class="table_head">
 
 
-								
+
 
 
 								<th class="column-1">Product</th>
@@ -105,13 +105,30 @@
 
 					<div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
 						<div class="flex-w flex-m m-r-20 m-tb-5">
-							<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon"
+							<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5"  type="text" name="coupon" id="applyCoupon"
 								placeholder="Coupon Code">
 
+                             
+									  
 							<div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
-								Apply coupon
+							    <a href="" onclick="applyCoupon(event)" class="btn ">Apply coupon</a>
+							
+							</div>
+
+
+
+
+							<div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
+							    {{!-- <a href="" class="btn ">Apply coupon</a> --}}
+								<!--Modal Button -->
+								<button type="button" class="btn " data-toggle="modal" style="color:rgb(20, 138, 223); font-size:17px;" data-target="#modalCenter">
+									View coupon
+								</button>
+								<!--Modal Button end-->
 							</div>
 						</div>
+
+
 
 						<div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
 							<a href="/">Update Cart</a>
@@ -143,6 +160,36 @@
 						</div>
 					</div>
 
+					<div class="flex-w flex-t p-t-27 p-b-33">
+						<div class="size-208">
+							<span class="mtext-101 cl2">
+								Discount :
+
+							</span>
+						</div>
+
+						<div class="size-209 p-t-1">
+							<span class="mtext-110 cl2 font-weight-bold" id="dividedPrice">
+								
+							</span>
+						</div>
+					</div>
+
+					<div class="flex-w flex-t p-t-27 p-b-33">
+						<div class="size-208">
+							<span class="mtext-101 cl2">
+								Discounted price:
+								
+							</span>
+						</div>
+
+						<div class="size-209 p-t-1">
+							<span class="mtext-110 cl2 font-weight-bold" id="discountedprice">
+							
+							</span>
+						</div>
+					</div>
+
 
 					<a href='/proceed_to_checkout'
 						class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">Proceed to
@@ -161,50 +208,158 @@
 {{>user-footer}}
 
 {{else}}
-                          
-   
+
+
+
 {{!-- <h1 class="d-flex justify-content-center">No Cart Items</h1> --}}
-<div class="container-fluid" style=" background: rgb(194,195,195);background: linear-gradient(103deg, rgba(194,195,195,1) 7%, rgba(180,255,244,1) 71%, rgba(225,226,226,1) 100%);">
-<div class="container">
+<div class="container-fluid"
+	style=" background: rgb(194,195,195);background: linear-gradient(103deg, rgba(194,195,195,1) 7%, rgba(180,255,244,1) 71%, rgba(225,226,226,1) 100%);">
+	<div class="container">
 
-	<div class="col-sm-12 empty-cart-cls text-center mb-5 " style=" margin-top: -52px; height: 100vh;">
-		<img src="https://cdn-icons-png.flaticon.com/512/678/678451.png" width="130" height="130"
-			class="img-fluid mb-5 mr-3" style="margin-top: 215px;">
-		<h3 class="mb-5"><strong>Your Cart is Empty</strong></h3>
-		<button type="button" class="btn btn-outline-secondary">
-			<a href="/" class="btn btn-index ">Shop now </a>
-		</button>
+		<div class="col-sm-12 empty-cart-cls text-center mb-5 " style=" margin-top: -52px; height: 100vh;">
+			<img src="https://cdn-icons-png.flaticon.com/512/678/678451.png" width="130" height="130"
+				class="img-fluid mb-5 mr-3" style="margin-top: 215px;">
+			<h3 class="mb-5"><strong>Your Cart is Empty</strong></h3>
+			<button type="button" class="btn btn-outline-secondary">
+				<a href="/" class="btn btn-index ">Shop now </a>
+			</button>
 
+		</div>
 	</div>
+	{{/if}}
+
+
+
+
+
+	<!-- Vertically Centered Modal -->
+	<div class="col-lg-4 col-md-6">
+    
+		<div class="mt-3">
+
+
+			<!-- Modal -->
+			<div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content" >
+						<div class="modal-header">
+							<h5 class="modal-title" id="modalCenterTitle">Modal title</h5>
+							<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+						</div>
+						
+                    
+						  <div class="wrapper d-flex justify-content-center align-items-center" style="background: rgb(194,195,195);background: linear-gradient(103deg, rgba(194,195,195,1) 7%, rgba(180,255,244,1) 71%, rgba(225,226,226,1) 100%);">
+
+      <div class="card">
+
+
+        <div class="cross-bg">
+          
+        </div>
+
+        <div class="content">
+
+        <div class="logo text-right">
+          <img src="/images/Fastrack_logo.png" width="80">
+        </div>
+
+        <div class="text-center text-uppercase text-white off">
+
+
+          <span>Flat</span>
+          <h1 class="mt-0">{{couponData.discount}}%</h1>
+          
+        </div>
+{{!-- 
+        <div class="text-center text-white">
+
+          <span class="plus">+</span>
+          
+        </div>
+
+
+        <div class="text-center text-uppercase text-white">
+
+
+         
+          <h3 class="m-0">10% OFF</h3>
+          
+        </div> --}}
+
+
+        <div class="px-5 mb-3">
+          
+          <div class="code text-center mt-4">
+
+          <span>Use code :{{couponData.coupon_code}}</span>
+          
+
+        </div>
+
+        </div>
+
+      </div>
+
+        
+      </div>
+
+      
+      
+    </div>
+
+
+						<div class="" style="margin-bottom: 300px;">
+							<button type="button" class="btn btn-outline-secondary" style="margin-left:45%"; data-dismiss="modal">
+								OK
+							</button>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-{{/if}}
+
+<!-- Vertically Centered Modal end -->
 
 
-<!-- Footer -->
+	{{!--
+	<script src="ajax.js"></script> --}}
 
 
-{{!--
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> --}}
+	<script>
+		function changeQuantity(cartId, proId, count) {
+			console.log(cartId, proId, count)
+			$.ajax({
+				url: '/cart',
+				data: {
+					cart: cartId,
+					product: proId,
+					count: count,
+				},
+				method: 'post',
+				success: (response) => {
+					$("#reload-div").load(location.href + " #reload-div");
+				}
+			})
+		}
 
-{{!--
-<script src="ajax.js"></script> --}}
 
 
-<script>
-	function changeQuantity(cartId, proId, count) {
-		console.log(cartId, proId, count)
-		$.ajax({
-			url: '/cart',
-			data: {
-				cart: cartId,
-				product: proId,
-				count: count,
-			},
-			method: 'post',
-			success: (response) => {
-				$("#reload-div").load(location.href + " #reload-div");
-			}
-		})
+   function applyCoupon(event){
+		event.preventDefault()
+     $.ajax({
+	   url:'/apply_coupon',
+		method:'post',
+		data:{coupon_code:$("#applyCoupon").val()},
+		success:(couponAppliedData)=>{
+			console.log(couponAppliedData)
+			$("#dividedPrice").text(couponAppliedData[0].dividedPrice)
+			$('#discountedprice').text(couponAppliedData[0].discountprice)
+		}
+	  })
+
 	}
-</script>
+
+
+	</script>

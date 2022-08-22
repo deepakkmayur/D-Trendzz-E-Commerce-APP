@@ -17,61 +17,60 @@ const verifyLogin = function (req, res, next) {
 let cartCount = 0;
 let shopProducts;
 
-router.get("/", async (req, res,next) => {
-
+router.get("/", async (req, res, next) => {
+  console.log("-------------------------1");
   try {
     if (req.session.loggedIn) {
       var cartCount = await userHelpers.getCartcount(req.session.user._id);
     } else {
+      console.log("--------------------------------first 1");
       var cartCount = 0;
     }
-    
-  if(req.query.search){
-    console.log(req.query.search,"-------search");
-    console.log("----------------------1");
-    userHelpers.getSearchData(req.query.search, next).then((searchData)=>{
-      console.log(searchData,"////////////////////searchData/////////////first/////////");
-      if (searchData) {
-        res.render("index", {
-          title: "Dtrendzz",
-          user: true,
-          isuserloggedin: req.session.loggedIn,
-          isusersession: req.session.user,
-          layout: "main-layout",
-          BRINGDATA: searchData,
-          cartCount,
-        });
-      } else {
-        res.render("user/error", { layout: "main-layout" });
-      }
-    }).catch((error)=>{
-      next(error)
-    })
-  }else{
-    console.log("----------------------2");
-    userHelpers.doBringdata().then((bringdata) => {
-      if (bringdata) {
-        res.render("index", {
-          title: "Dtrendzz",
-          user: true,
-          isuserloggedin: req.session.loggedIn,
-          isusersession: req.session.user,
-          layout: "main-layout",
-          BRINGDATA: bringdata,
-          cartCount,
-        });
+
+    if (req.query.search) {
   
-        // console.log(req.session.user.firstname);
-      } else {
-        res.render("user/error", { layout: "main-layout" });
-      }
-    });
-    
-  }
-    
+      userHelpers
+        .getSearchData(req.query.search)
+        .then((searchData) => {
+          if (searchData) {
+            res.render("index", {
+              title: "Dtrendzz",
+              user: true,
+              isuserloggedin: req.session.loggedIn,
+              isusersession: req.session.user,
+              layout: "main-layout",
+              BRINGDATA: searchData,
+              cartCount,
+            });
+          } else {
+            res.render("user/error", { layout: "main-layout" });
+          }
+        })
+        .catch((error) => {
+          next(error);
+        });
+    } else {
+      userHelpers.doBringdata().then((bringdata) => {
+        if (bringdata) {
+          res.render("index", {
+            title: "Dtrendzz",
+            user: true,
+            isuserloggedin: req.session.loggedIn,
+            isusersession: req.session.user,
+            layout: "main-layout",
+            BRINGDATA: bringdata,
+            cartCount,
+          });
+
+          // console.log(req.session.user.firstname);
+        } else {
+          res.render("user/error", { layout: "main-layout" });
+        }
+      });
+    }
   } catch (error) {
     console.log(error);
-    next(error)
+    next(error);
   }
 });
 
@@ -286,19 +285,18 @@ router.post("/my_profile", async (req, res, next) => {
   }
 });
 
-router.post("/change_password", (req, res,next) => {
+router.post("/change_password", (req, res, next) => {
   try {
     userHelpers.changePassword(req.body).then(() => {
       res.redirect("/my_profile");
     });
-    
   } catch (error) {
     console.log(error);
-    next(error)
+    next(error);
   }
 });
 
-router.get("/shop", (req, res,next) => {
+router.get("/shop", (req, res, next) => {
   try {
     userHelpers.doBringdata().then((bringData) => {
       if (bringData) {
@@ -307,41 +305,40 @@ router.get("/shop", (req, res,next) => {
         res.redirect("/filter-shop");
       }
     });
-    
   } catch (error) {
     console.log(error);
-    next(error)
+    next(error);
   }
 });
 
-router.get("/category_filter", (req, res,next) => {
+router.get("/category_filter", (req, res, next) => {
   try {
     parseUrl = url.parse(req.url, true);
-    userHelpers.categoryFilter(parseUrl.query.category).then((filterdProduct) => {
-      shopProducts = filterdProduct[0].filterProducts;
-      res.redirect("/filter-shop");
-    });
-    
+    userHelpers
+      .categoryFilter(parseUrl.query.category)
+      .then((filterdProduct) => {
+        shopProducts = filterdProduct[0].filterProducts;
+        res.redirect("/filter-shop");
+      });
   } catch (error) {
     console.log(error);
-    next(error)
+    next(error);
   }
 });
 
-router.post("/category_filter", (req, res,next) => {
+router.post("/category_filter", (req, res, next) => {
   try {
     userHelpers.categoryFilter(req.body.category).then((filterdProduct) => {
       shopProducts = filterdProduct[0].filterProducts;
       res.redirect("/filter-shop");
     });
-    
   } catch (error) {
     console.log(error);
-    next(error)
+    next(error);
   }
 });
 
-router.get("/filter-shop", (req, res,next) => {
+router.get("/filter-shop", (req, res, next) => {
   try {
     res.render("user/shop", {
       layout: "main-layout",
@@ -351,14 +348,13 @@ router.get("/filter-shop", (req, res,next) => {
       bringdata: shopProducts,
       cartCOUNT: cartCount,
     });
-    
   } catch (error) {
-   console.log(error); 
-   next(error)
+    console.log(error);
+    next(error);
   }
 });
 
-router.get("/view_product/:id", verifyLogin, (req, res,next) => {
+router.get("/view_product/:id", verifyLogin, (req, res, next) => {
   try {
     userHelpers.viewEachproduct(req.params.id).then((productDetails) => {
       if (productDetails) {
@@ -373,10 +369,9 @@ router.get("/view_product/:id", verifyLogin, (req, res,next) => {
       }
       res.redirect("/");
     });
-    
   } catch (error) {
     console.log(error);
-    next(error)
+    next(error);
   }
 });
 
@@ -389,7 +384,7 @@ router.post("/ADD_TO_CART", async (req, res, next) => {
   }
 });
 
-router.post("/add_to_cart/:id", (req, res,next) => {
+router.post("/add_to_cart/:id", (req, res, next) => {
   try {
     userHelpers.addTocart(req.session.user._id, req.params.id).then((data) => {
       if (data) {
@@ -398,61 +393,75 @@ router.post("/add_to_cart/:id", (req, res,next) => {
         res.redirect("/error");
       }
     });
-    
   } catch (error) {
-    next(error)
+    next(error);
   }
 });
 
-router.get("/cart", verifyLogin, async (req, res,next) => {
+router.get("/cart", verifyLogin, async (req, res, next) => {
   try {
     let cartProducts = await userHelpers.getCartproducts(req.session.user._id);
-    console.log(cartProducts,"----------------------------------------------------cartProducts------------------------------------------");
+
     let total = await userHelpers.getCarttotal(req.session.user._id);
     let cartCount = await userHelpers.getCartcount(req.session.user._id);
+    let couponData = await userHelpers.getCouponData();
+    // console.log(couponData,"------------------------------------------------------------couponData----------------------------------------");
     res.render("user/cart", {
       layout: "main-layout",
       user: true,
       isuserloggedin: req.session.loggedIn,
       isusersession: req.session.user,
       cartProducts,
-  
+
       cartCount,
       total,
+      applyCouponModal: true,
+      couponData,
     });
-    
   } catch (error) {
     console.log(error);
-    next(error)
+    next(error);
   }
 });
 
-router.post("/cart", (req, res,next) => {
+router.post("/cart", (req, res, next) => {
   try {
     userHelpers.changeProductQuantity(req.body).then(() => {
       res.json(response);
     });
-    
   } catch (error) {
     console.log(error);
-    next(error)
+    next(error);
   }
 });
 
-router.get("/delete_from_cart/:id", verifyLogin, (req, res,next) => {
+router.post("/apply_coupon", async (req, res, next) => {
+  try {
+ 
+    const couponAppliedData = await userHelpers.applyCoupon(
+      req.body.coupon_code,
+      req.session.user._id
+    );
+
+    res.json(couponAppliedData);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+router.get("/delete_from_cart/:id", verifyLogin, (req, res, next) => {
   try {
     userHelpers.deleteFromcart(req.session.user._id, req.params.id).then(() => {
       res.redirect("/cart");
     });
-    
   } catch (error) {
-   console.log(error);
-   next(error) 
+    console.log(error);
+    next(error);
   }
 });
 
-
-router.get("/proceed_to_checkout", verifyLogin, async (req, res,next) => {
+router.get("/proceed_to_checkout", verifyLogin, async (req, res, next) => {
   try {
     let cartitems = await userHelpers.getCartproducts(req.session.user._id);
     if (cartitems.length != 0) {
@@ -464,43 +473,53 @@ router.get("/proceed_to_checkout", verifyLogin, async (req, res,next) => {
           ADDRESS,
           onlinepayment: true,
           isuserloggedin: req.session.loggedIn,
-         isusersession: req.session.user,
+          isusersession: req.session.user,
         });
       });
     } else {
       res.redirect("/cart");
     }
-    
   } catch (error) {
     console.log(error);
-    next(error)
+    next(error);
   }
 });
 
-router.post("/submit_address", (req, res,next) => {
+router.post("/submit_address", (req, res, next) => {
   try {
     userHelpers.addAddress(req.session.user._id, req.body).then((response) => {
-    
-      res.redirect('back')
+      res.redirect("back");
     });
-    
   } catch (error) {
     console.log(error);
-    next(error)
+    next(error);
   }
 });
 
-router.post("/proceed_to_checkout", async (req, res,next) => {
+router.post("/proceed_to_checkout", async (req, res, next) => {
   try {
-    let cartTotal = await userHelpers.getCarttotal(req.session.user._id);
-  
-    let cartitems = await userHelpers.getCartproducts(req.session.user._id);
-  
-    let address = await userHelpers.getAddress(
+    let cartTotal;
+    const cartTotalAmount = await userHelpers.getCarttotal(
+      req.session.user._id
+    );
+    const couponAppliedCartTotal = await userHelpers.getCouponCartTotal(
+      req.session.user._id
+    );
+ 
+
+    if (couponAppliedCartTotal) {
+      cartTotal = couponAppliedCartTotal;
+    } else {
+      cartTotal = cartTotalAmount;
+    }
+
+    const cartitems = await userHelpers.getCartproducts(req.session.user._id);
+
+    const address = await userHelpers.getAddress(
       req.session.user._id,
       req.body.time
     );
-  
+
     userHelpers
       .placeOrder(req.session.user._id, req.body, cartTotal, cartitems, address)
       .then((orderId) => {
@@ -512,26 +531,27 @@ router.post("/proceed_to_checkout", async (req, res,next) => {
           });
         }
       });
-    
   } catch (error) {
     console.log(error);
-    next(error)
+    next(error);
   }
 });
 
-router.get("/delivered_page", (req, res,next) => {
+router.get("/delivered_page", (req, res, next) => {
   try {
-    res.render("user/deliveredpage", { layout: "main-layout", user: true, isuserloggedin: req.session.loggedIn,isusersession: req.session.user });
-    
+    res.render("user/deliveredpage", {
+      layout: "main-layout",
+      user: true,
+      isuserloggedin: req.session.loggedIn,
+      isusersession: req.session.user,
+    });
   } catch (error) {
     console.log(error);
-    next(error)
+    next(error);
   }
- 
-
 });
 
-router.post("/verify_payment", (req, res,next) => {
+router.post("/verify_payment", (req, res, next) => {
   try {
     userHelpers
       .verifyPayment(req.body)
@@ -547,14 +567,13 @@ router.post("/verify_payment", (req, res,next) => {
         console.log(err);
         res.json({ status: false, errMsg: "" });
       });
-    
   } catch (error) {
     console.log(error);
-    next(error)
+    next(error);
   }
 });
 
-router.get("/orderlist_page",verifyLogin, (req, res,next) => {
+router.get("/orderlist_page", verifyLogin, (req, res, next) => {
   try {
     userHelpers
       .getOrderedItems(req.session.user._id)
@@ -567,52 +586,50 @@ router.get("/orderlist_page",verifyLogin, (req, res,next) => {
           orderPlacementDetails: true,
           isuserloggedin: req.session.loggedIn,
           isusersession: req.session.user,
-  
         });
       });
-    
   } catch (error) {
     console.log(error);
-    next(error)
+    next(error);
   }
 });
 
-router.post("/add-to-wishlist", (req, res,next) => {
+router.post("/add-to-wishlist", (req, res, next) => {
   try {
     userHelpers.addTowishlist(req.body.productID, req.session.user._id);
-    
   } catch (error) {
     console.log(error);
-    next(error)
+    next(error);
   }
 });
 
-router.get("/wishlist", verifyLogin,async(req, res,next) => {
+router.get("/wishlist", verifyLogin, async (req, res, next) => {
   try {
     let cartCount = await userHelpers.getCartcount(req.session.user._id);
 
-    userHelpers.getWishlistproducts(req.session.user._id).then((wishproducts) => {
-      if (wishproducts) {
-        res.render("user/wishlist", {
-          layout: "main-layout",
-          user: true,
-          isuserloggedin: req.session.loggedIn,
-          isusersession: req.session.user,
-          cartCount,
-          wishproducts,
-        });
-      } else {
-        res.redirect("/");
-      }
-    });
-    
+    userHelpers
+      .getWishlistproducts(req.session.user._id)
+      .then((wishproducts) => {
+        if (wishproducts) {
+          res.render("user/wishlist", {
+            layout: "main-layout",
+            user: true,
+            isuserloggedin: req.session.loggedIn,
+            isusersession: req.session.user,
+            cartCount,
+            wishproducts,
+          });
+        } else {
+          res.redirect("/");
+        }
+      });
   } catch (error) {
     console.log(error);
-    next(error)
+    next(error);
   }
 });
 
-router.post("/remove_wishlist_product", (req, res,next) => {
+router.post("/remove_wishlist_product", (req, res, next) => {
   try {
     userHelpers
       .removeFromwishlist(req.session.user._id, req.body.product)
@@ -621,23 +638,22 @@ router.post("/remove_wishlist_product", (req, res,next) => {
           res.redirect("/wishlist");
         }
       });
-    
   } catch (error) {
     console.log(error);
-    next(error)
+    next(error);
   }
 });
 
-router.post('/search',(req,res,next)=>{
+router.post("/search", (req, res, next) => {
   try {
-    res.send("hiii")
+    res.send("hiii");
   } catch (error) {
     console.log(error);
-    next(error)
+    next(error);
   }
-})
+});
 
-router.get("/error",verifyLogin, (re, res) => {
+router.get("/error", verifyLogin, (re, res) => {
   res.render("user/error", { layout: "main-layout" });
 });
 

@@ -1,0 +1,75 @@
+body{
+
+   background-color: #eee;
+ }
+ 
+ .wrapper{
+ 
+   height: 100vh;
+ }
+ 
+ .card{
+     
+     position: relative;
+     background-color: #7B1FA2;
+     padding: 10px;
+     width: 400px;
+     border:none;
+    
+ 
+ }
+ 
+ .content{
+ 
+   z-index: 10;
+ }
+ 
+ .logo{
+ 
+   margin-bottom: 50px;
+ }
+ 
+ 
+ .off{
+ 
+       line-height: 0px;
+ }
+ 
+ .off h1{
+ 
+   font-size: 80px;
+ }
+ 
+ .off span{
+ 
+   margin-right: 111px;
+ }
+ 
+ 
+ .plus{
+   font-size: 23px;
+ }
+ 
+ .code{
+ 
+   text-transform: uppercase;
+   padding: 10px;
+   background-color: #fff;
+   color: red;
+   font-size: 20px;
+ }
+ 
+ .cross-bg{
+ 
+   height: 100%;
+   width: 100%;
+   position: absolute;
+ 
+   background-color: #9C27B0;
+ 
+   left: 0px;
+     top: 0px;
+     opacity: 0.4;
+     clip-path: polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%);
+     z-index:1;
+ }

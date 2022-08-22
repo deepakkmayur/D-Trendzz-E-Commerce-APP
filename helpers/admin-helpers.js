@@ -7,46 +7,34 @@ module.exports = {
   doLogin: (userData) => {
  
     return new Promise(async (resolve, reject) => {
-      let admin = await db
-        .get()
-        .collection(collection.adminCollection)
-        .findOne({ email: userData.email });
- 
-      if (admin) {
-        bcrypt.compare(userData.password, admin.password).then((data) => {
-     
-          if (data) {
-    
-            resolve(data);
-          } else {
-            resolve();
-          }
-        });
-      } else {
-        resolve();
+      try {
+        let admin = await db
+          .get()
+          .collection(collection.adminCollection)
+          .findOne({ email: userData.email });
+   
+        if (admin) {
+          bcrypt.compare(userData.password, admin.password).then((data) => {
+       
+            if (data) {
+      
+              resolve(data);
+            } else {
+              resolve();
+            }
+          });
+        } else {
+          resolve();
+        }
+        
+      } catch (error) {
+        console.log(error);
+        reject(error)
       }
     });
   },
 
-  // doUpdate:(userData)=>{
-  //    const Admin=(async (resolve,reject)=>{
 
-  //      let admin= await db.get().collection(collection.adminCollection).insertOne(userData).then((data)=>{
-
-  //      })
-  //              if(admin){
-
-  //                 return new Promise(async(resolve,reject)=>{
-  //                         let insertData= await db.get().collection(collection.adminCollection).find()
-  //                             if(insertData){
-  //                               console.log(insertData);
-  //                               resolve(insertData)
-  //                             }
-  //                          })
-  //                 }
-  //              })
-
-  // }
 
   // doAddproduct: (productData) => {
   //   productData.price = parseInt(productData.price)
@@ -74,47 +62,50 @@ module.exports = {
         (productData.discount = "0");
     }
 
-    // productData.price = parseInt(productData.price);
     return new Promise((resolve, reject) => {
-      db.get()
-        .collection(collection.productCollection)
-        .insertOne(productData)
-        .then(async (data) => {
-          if (data) {
-            resolve(data);
-          } else {
-            resolve();
-          }
-        });
+      try {
+        db.get()
+          .collection(collection.productCollection)
+          .insertOne(productData)
+          .then(async (data) => {
+            if (data) {
+              resolve(data);
+            } else {
+              resolve();
+            }
+          });
+        
+      } catch (error) {
+        console.log(error);
+        reject(error)
+      }
     });
   },
 
   showProduct: (productData) => {
     return new Promise((resolve, reject) => {
-      db.get()
-        .collection(collection.productCollection)
-        .insertOne(productData)
-        .then(async (data) => {
-          if (data) {
-            resolve(data);
-          } else {
-            resolve();
-          }
-        });
+      try {
+        db.get()
+          .collection(collection.productCollection)
+          .insertOne(productData)
+          .then(async (data) => {
+            if (data) {
+              resolve(data);
+            } else {
+              resolve();
+            }
+          });
+        
+      } catch (error) {
+        console.log(error);
+        reject(error)
+      }
     });
   },
 
   showProduct: () => {
     return new Promise(async (resolve, reject) => {
-      // const products=await db.get().collection(collection.productCollection).find().toArray()
-      // // console.log("product", products);
-      // if(products){
 
-      //    // console.log(products)
-      //    resolve(products)
-      // }
-
-      // AGGREGATION
       try {
         const products = await db
           .get()
@@ -143,13 +134,19 @@ module.exports = {
 
   doEditpage: (id) => {
     return new Promise(async (resolve, reject) => {
-      const findEdit = await db
-        .get()
-        .collection(collection.productCollection)
-        .findOne({ _id: objectid(id) });
-      if (findEdit) {
-        //   console.log(findEdit);
-        resolve(findEdit);
+      try {
+        const findEdit = await db
+          .get()
+          .collection(collection.productCollection)
+          .findOne({ _id: objectid(id) });
+        if (findEdit) {
+          //   console.log(findEdit);
+          resolve(findEdit);
+        }
+        
+      } catch (error) {
+        console.log(error);
+        reject(error)
       }
     });
   },
@@ -157,61 +154,78 @@ module.exports = {
   doEditproduct: (productDetails, id) => {
     productDetails.price = parseInt(productDetails.price);
     return new Promise(async (resolve, reject) => {
-      const edit = await db
-        .get()
-        .collection(collection.productCollection)
-        .updateOne(
-          { _id: objectid(id) },
-          {
-            $set: {
-              product_name: productDetails.product_name,
-              price: productDetails.price,
-              brand: productDetails.brand,
-              category: productDetails.category,
-              description: productDetails.description,
-              img_id: productDetails.img_id,
-              stock: productDetails.stock,
-              size: productDetails.size,
-            },
-          }
-        );
-      if (edit) {
-        console.log("-------===first data-------", edit);
-        resolve(edit);
-      } else {
-        resolve();
+      try {
+        
+        const edit = await db
+          .get()
+          .collection(collection.productCollection)
+          .updateOne(
+            { _id: objectid(id) },
+            {
+              $set: {
+                product_name: productDetails.product_name,
+                price: productDetails.price,
+                brand: productDetails.brand,
+                category: productDetails.category,
+                description: productDetails.description,
+                img_id: productDetails.img_id,
+                stock: productDetails.stock,
+                size: productDetails.size,
+              },
+            }
+          );
+        if (edit) {
+       
+          resolve(edit);
+        } else {
+          resolve();
+        }
+      } catch (error) {
+        console.log(error);
+        reject(error)
       }
 
-      // resolve(productDetails)
     });
   },
 
   doDeleteproduct: (id) => {
     return new Promise(async (resolve, reject) => {
-      let deleteProduct = await db
-        .get()
-        .collection(collection.productCollection)
-        .deleteOne({ _id: objectid(id) });
-      if (deleteProduct) {
-        // console.log("product deleted here ",deleteProduct);
-        resolve(deleteProduct);
-      } else {
-        resolve();
+      try {
+        let deleteProduct = await db
+          .get()
+          .collection(collection.productCollection)
+          .deleteOne({ _id: objectid(id) });
+        if (deleteProduct) {
+   
+          resolve(deleteProduct);
+        } else {
+          resolve();
+        }
+        
+      } catch (error) {
+        console.log(error);
+        reject(error)
       }
     });
   },
 
   userManagement: () => {
     return new Promise(async (resolve, reject) => {
-      const userdetails = await db
-        .get()
-        .collection(collection.userCollection)
-        .find()
-        .toArray();
-      if (userdetails) {
-        resolve(userdetails);
-      } else {
-        resolve();
+      try {
+        const userdetails = await db
+          .get()
+          .collection(collection.userCollection)
+          .find()
+          .toArray();
+        if (userdetails) {
+          resolve(userdetails);
+        } else {
+          resolve();
+        }
+        
+      } catch (error) {
+        console.log(error);
+        reject(error)
       }
     });
   },
@@ -248,68 +262,74 @@ module.exports = {
       });
     } catch (error) {
       console.log(error);
-      next(error);
+      reject(error);
     }
   },
 
   blockUser: (id) => {
     return new Promise(async (resolve, reject) => {
-      const block = await db
-        .get()
-        .collection(collection.userCollection)
-        .updateOne({ _id: objectid(id) }, { $set: { isblockeduser: true } });
-
-      if (block) {
-        resolve(block);
-      } else {
-        resolve();
+      try {
+        const block = await db
+          .get()
+          .collection(collection.userCollection)
+          .updateOne({ _id: objectid(id) }, { $set: { isblockeduser: true } });
+  
+        if (block) {
+          resolve(block);
+        } else {
+          resolve();
+        }
+        
+      } catch (error) {
+        console.log(error);
+        reject(error)
       }
     });
   },
 
   unblockUser: (id) => {
     return new Promise(async (resolve, reject) => {
-      const unblock = await db
-        .get()
-        .collection(collection.userCollection)
-        .updateOne({ _id: objectid(id) }, { $set: { isblockeduser: false } });
-
-      if (unblock) {
-        resolve(unblock);
-      } else {
-        resolve();
+      try {
+        const unblock = await db
+          .get()
+          .collection(collection.userCollection)
+          .updateOne({ _id: objectid(id) }, { $set: { isblockeduser: false } });
+  
+        if (unblock) {
+          resolve(unblock);
+        } else {
+          resolve();
+        }
+        
+      } catch (error) {
+        console.log(error);
+        reject(error)
       }
     });
   },
 
   findCategory: () => {
     return new Promise(async (resolve, reject) => {
-      const category = await db
-        .get()
-        .collection(collection.categoryCollection)
-        .find()
-        .toArray();
-      if (category) {
-        resolve(category);
-      } else {
-        resolve();
+      try {
+        const category = await db
+          .get()
+          .collection(collection.categoryCollection)
+          .find()
+          .toArray();
+        if (category) {
+          resolve(category);
+        } else {
+          resolve();
+        }
+        
+      } catch (error) {
+       console.log(error);
+       reject(error) 
       }
     });
   },
 
-  // bringOrderDetails: (userID) => {
-  //   return new Promise(async (resolve, reject) => {
-  //     try {
-  //       let oderedProducts = await db.get().collection(collection.orderCollection).find({ userId: objectid(userID) }).toArray();
-  //       if (oderedProducts) {
 
-  //         resolve(oderedProducts)
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   })
-  // },
   bringOrderDetails: (userID) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -322,10 +342,11 @@ module.exports = {
           ])
           .toArray();
 
-        // console.log(oderedProducts[0].orderDetails.products,"///////////////////////////---------------------oderedProducts-------------------////////////////////////////////////////////////////////");
+        
         resolve(oderedProducts);
       } catch (error) {
         console.log(error);
+        reject(error)
       }
     });
   },
@@ -450,11 +471,14 @@ module.exports = {
         }
       } catch (error) {
         console.log(error);
+        reject(error)
       }
     });
   },
 
   generateCoupon:(coupon)=>{
+     
+
     if(coupon.discount>0 && coupon.discount<100){
       coupon.discount=coupon.discount
   
