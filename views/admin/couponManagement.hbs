@@ -20,77 +20,104 @@
 
             <div class="card-body">
 
-             
-
-            <div class="content-wrapper">
-               <!-- Content -->
-
-                <div class="mb-2"><a href="/admin/generate_coupon" class="btn" style="background-color:rgb(17, 251, 130); ">Generate coupon </a></div>
-               <div class="card">
-                  
-                  <h5 class="card-header">Table Basic</h5>
-                  <div class="table-responsive text-nowrap ">
-                     <table class="table">
-                        
-                        <thead>
-                           <tr>
-                              <th>SL NO</th>
-                              <th>COUPON CODE</th>
-                              <th>MIN PRICE</th>
-                              <th>DISCOUNT</th>
-                              {{!-- <th>phone</th> --}}
-                                <TH>VALIDITY FROM</TH>
-                                <th>VALIDITY TILL</th>
-
-                             
-                              <th>DELETE COUPON</th>
-                           </tr>
-                        </thead>
-                    
-
-                        <tbody class="table-border-bottom-0">
-                           {{#each couponDetails}}
-                           <tr>
-                              <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{inc @index}}</strong></td>
-                             
-                              <td>{{this.coupon_code}}</td>
-                              <td>{{this.minimum_price}}</td>
-                              <td>{{this.discount}}</td>
-                              <td>{{this.validfrom}}</td>
-                              <td>{{this.validtill}}</td>
-                        
-                              
-                              <td><a href="/admin/delete_coupon?id={{this._id}}" onclick="return confirm('Do you want to delete ?')"   class="btn" style="background-color:rgb(255, 1, 1); color:rgb(240, 240, 240)"  >Delete </a></td>
-
-                              <td>
-                               
-                                 
-                                
-                              
-                              
-
-                              </td>
 
 
-                              <td>
-                  
-                              </td>
-                           </tr>
-                           {{/each}}
+               <div class="content-wrapper">
+                  <!-- Content -->
 
-                        </tbody>
-                       
-                     </table>
+                  <div class="mb-2"><a href="/admin/generate_coupon" class="btn"
+                        style="background-color:rgb(17, 251, 130); ">Generate coupon </a></div>
+                  <div class="card">
+
+                     <h5 class="card-header">Table Basic</h5>
+                     <div class="table-responsive text-nowrap ">
+                        <table class="table">
+
+                           <thead>
+                              <tr>
+                                 <th>SL NO</th>
+                                 <th>COUPON CODE</th>
+                                 <th>MIN PRICE</th>
+                                 <th>DISCOUNT</th>
+                                 {{!-- <th>phone</th> --}}
+                                 <th>VALIDITY FROM</th>
+                                 <th>VALIDITY TILL</th>
+                                 <th>STATUS</th>
+                                 <th>CHANGE STATUS</th>
+
+                                 <th>DELETE COUPON</th>
+                              </tr>
+                           </thead>
+
+
+                           <tbody class="table-border-bottom-0">
+                              {{#each couponDetails}}
+                              <tr>
+                                 <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{inc @index}}</strong></td>
+
+                                 <td>{{this.coupon_code}}</td>
+                                 <td>{{this.minimum_price}}</td>
+                                 <td>{{this.discount}}</td>
+                                 <td>{{this.validfrom}}</td>
+                                 <td>{{this.validtill}}</td>   
+                                    {{#if this.active}}
+                                    <td><p style="color:rgb(19, 241, 19);">{{this.status}}</p></td>
+                                    {{else}}
+                                    {{#if this.deactivated}}
+                                    <td><p style="color:red">{{this.status}}</p></td>  
+                                    {{else}}
+                                    <td><p>update</p></td>
+                                    {{/if}}
+                                    {{/if}}
+                                 <td>
+
+                                    <select class="btn btn-success text-white" onchange="location= this.value">    
+                                       <option>Change Status</option>
+                                       <option value="/admin/coupon_status?id={{this._id}}&status=active">
+                                          Active</option>
+                                       <option value="/admin/coupon_status?id={{this._id}}&status=deactivated">
+                                          Deactivated</option>
+                                       
+                                    </select>
+                                 </td>
+
+
+                                 <td><a href="/admin/?id={{this._id}}"
+                                       onclick="return confirm('Do you want to delete ?')" class="btn"
+                                       style="background-color:rgb(255, 1, 1); color:rgb(240, 240, 240)">Delete </a>
+                                 </td>
+
+                                 <td>
+
+
+
+
+
+
+
+
+                                 </td>
+
+
+                                 <td>
+
+                                 </td>
+                              </tr>
+                              {{/each}}
+
+                           </tbody>
+
+                        </table>
+                     </div>
                   </div>
+
+
                </div>
 
 
+               <!-- Content wrapper -->
             </div>
-
-
-            <!-- Content wrapper -->
          </div>
+         <!-- / Layout page -->
       </div>
-      <!-- / Layout page -->
    </div>
-</div>

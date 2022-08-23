@@ -1,23 +1,21 @@
 const db = require("../config/database");
 const collection = require("../config/collection");
 const bcrypt = require("bcrypt");
+const e = require("connect-flash");
 const objectid = require("mongodb").ObjectId;
 
 module.exports = {
   doLogin: (userData) => {
- 
     return new Promise(async (resolve, reject) => {
       try {
         let admin = await db
           .get()
           .collection(collection.adminCollection)
           .findOne({ email: userData.email });
-   
+
         if (admin) {
           bcrypt.compare(userData.password, admin.password).then((data) => {
-       
             if (data) {
-      
               resolve(data);
             } else {
               resolve();
@@ -26,15 +24,12 @@ module.exports = {
         } else {
           resolve();
         }
-        
       } catch (error) {
         console.log(error);
-        reject(error)
+        reject(error);
       }
     });
   },
-
-
 
   // doAddproduct: (productData) => {
   //   productData.price = parseInt(productData.price)
@@ -54,9 +49,10 @@ module.exports = {
 
   doAddproduct: (productData) => {
     if (productData.discount < 100 && productData.discount > 0) {
-      productData.price =parseInt( productData.actualprice - (productData.actualprice * productData.discount) / 100)
-       
-       
+      productData.price = parseInt(
+        productData.actualprice -
+          (productData.actualprice * productData.discount) / 100
+      );
     } else {
       (productData.price = productData.actualprice),
         (productData.discount = "0");
@@ -74,10 +70,9 @@ module.exports = {
               resolve();
             }
           });
-        
       } catch (error) {
         console.log(error);
-        reject(error)
+        reject(error);
       }
     });
   },
@@ -95,17 +90,15 @@ module.exports = {
               resolve();
             }
           });
-        
       } catch (error) {
         console.log(error);
-        reject(error)
+        reject(error);
       }
     });
   },
 
   showProduct: () => {
     return new Promise(async (resolve, reject) => {
-
       try {
         const products = await db
           .get()
@@ -143,10 +136,9 @@ module.exports = {
           //   console.log(findEdit);
           resolve(findEdit);
         }
-        
       } catch (error) {
         console.log(error);
-        reject(error)
+        reject(error);
       }
     });
   },
@@ -155,7 +147,6 @@ module.exports = {
     productDetails.price = parseInt(productDetails.price);
     return new Promise(async (resolve, reject) => {
       try {
-        
         const edit = await db
           .get()
           .collection(collection.productCollection)
@@ -175,16 +166,14 @@ module.exports = {
             }
           );
         if (edit) {
-       
           resolve(edit);
         } else {
           resolve();
         }
       } catch (error) {
         console.log(error);
-        reject(error)
+        reject(error);
       }
-
     });
   },
 
@@ -196,15 +185,13 @@ module.exports = {
           .collection(collection.productCollection)
           .deleteOne({ _id: objectid(id) });
         if (deleteProduct) {
-   
           resolve(deleteProduct);
         } else {
           resolve();
         }
-        
       } catch (error) {
         console.log(error);
-        reject(error)
+        reject(error);
       }
     });
   },
@@ -222,10 +209,9 @@ module.exports = {
         } else {
           resolve();
         }
-        
       } catch (error) {
         console.log(error);
-        reject(error)
+        reject(error);
       }
     });
   },
@@ -273,16 +259,15 @@ module.exports = {
           .get()
           .collection(collection.userCollection)
           .updateOne({ _id: objectid(id) }, { $set: { isblockeduser: true } });
-  
+
         if (block) {
           resolve(block);
         } else {
           resolve();
         }
-        
       } catch (error) {
         console.log(error);
-        reject(error)
+        reject(error);
       }
     });
   },
@@ -294,16 +279,15 @@ module.exports = {
           .get()
           .collection(collection.userCollection)
           .updateOne({ _id: objectid(id) }, { $set: { isblockeduser: false } });
-  
+
         if (unblock) {
           resolve(unblock);
         } else {
           resolve();
         }
-        
       } catch (error) {
         console.log(error);
-        reject(error)
+        reject(error);
       }
     });
   },
@@ -321,14 +305,12 @@ module.exports = {
         } else {
           resolve();
         }
-        
       } catch (error) {
-       console.log(error);
-       reject(error) 
+        console.log(error);
+        reject(error);
       }
     });
   },
-
 
   bringOrderDetails: (userID) => {
     return new Promise(async (resolve, reject) => {
@@ -342,11 +324,10 @@ module.exports = {
           ])
           .toArray();
 
-        
         resolve(oderedProducts);
       } catch (error) {
         console.log(error);
-        reject(error)
+        reject(error);
       }
     });
   },
@@ -471,36 +452,96 @@ module.exports = {
         }
       } catch (error) {
         console.log(error);
-        reject(error)
+        reject(error);
       }
     });
   },
 
-  generateCoupon:(coupon)=>{
-     
-
-    if(coupon.discount>0 && coupon.discount<100){
-      coupon.discount=coupon.discount
-  
-    }else{
-      coupon.discount=0
+  generateCoupon: (coupon) => {
+    if (coupon.discount > 0 && coupon.discount < 100) {
+      coupon.discount = coupon.discount;
+    } else {
+      coupon.discount = 0;
     }
-    return new Promise(async(resolve,reject)=>{
+    return new Promise(async (resolve, reject) => {
       try {
-        await db.get().collection(collection.couponCollection).insertOne(coupon)
-        resolve()
+        await db
+          .get()
+          .collection(collection.couponCollection)
+          .insertOne(coupon);
+        resolve();
       } catch (error) {
         console.log(error);
-        reject(error)
+        reject(error);
       }
-    })
-
+    });
   },
-  getCouponDetails:()=>{
+  getCouponDetails: () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const couponDetails = await db
+          .get()
+          .collection(collection.couponCollection)
+          .find()
+          .toArray();
+        resolve(couponDetails);
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
+  },
+
+  deleteCoupon: (couponID) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await db
+          .get()
+          .collection(collection.couponCollection)
+          .deleteOne({ _id: objectid(couponID) });
+        resolve();
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
+  },
+
+  couponStatusChange:(couponID,couponStatus)=>{
    return new Promise(async (resolve,reject)=>{
     try {
-      const couponDetails= await db.get().collection(collection.couponCollection).find().toArray()
-      resolve(couponDetails)
+      console.log(couponStatus,"///////////////////////////////////couponStatus  enter");
+      if(couponStatus=='active'){
+        console.log("////////active///////////");
+        await db
+        .get().collection(collection.couponCollection)
+        .updateOne({ _id: objectid(couponID) },
+        {
+          $set:{
+            status:couponStatus,
+            active:true,
+            deactivated:false
+
+          }
+        });
+      }else{
+        console.log("////////deactivated///////////");
+        await db
+        .get().collection(collection.couponCollection)
+        .updateOne({ _id: objectid(couponID) },
+        {
+          $set:{
+            status:couponStatus,
+            deactivated:true,
+            active:false,
+  
+          }
+        });
+      }
+     
+    //  const couponDetails= await db.get().collection(collection.couponCollection).findOne({_id: objectid(couponID)},{status:couponStatus})
+    //  console.log(couponDetails.status,"///////////////////////////////////couponStatus");
+      resolve()
     } catch (error) {
       console.log(error);
       reject(error)
@@ -509,17 +550,85 @@ module.exports = {
   },
 
 
-  deleteCoupon:(couponID)=>{
-    return new Promise(async (resolve,reject)=>{
+
+  getTotalUsers: () => {
+    return new Promise(async (resolve, reject) => {
       try {
-        await db.get().collection(collection.couponCollection).deleteOne({_id:objectid(couponID)})
-        resolve()
+        const totalOrder = await db
+          .get()
+          .collection(collection.orderCollection)
+          .find()
+          .toArray();
+        if (totalOrder) {
+          resolve(totalOrder.length);
+        } else {
+          resolve(0);
+        }
       } catch (error) {
         console.log(error);
-        reject(error)
+        reject(error);
       }
-    })
-  }
+    });
+  },
+
+  getUserCount: () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const totalUsers = await db
+          .get()
+          .collection(collection.userCollection)
+          .find()
+          .toArray();
+        if (totalUsers) {
+          resolve(totalUsers.length);
+        } else {
+          // totalUsers.length=0
+          resolve(0);
+        }
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
+  },
+
+  getOnlinePaymentCount: () => {
+  
+    return new Promise(async (resolve, reject) => {
+      try {
+        let onlinePaymentOrderCount = await db
+          .get()
+          .collection(collection.orderCollection)
+          .find({ "orderDetails.paymentMethod": "onlinepayment" })
+          .toArray();
+        if (onlinePaymentOrderCount) {
+          resolve(onlinePaymentOrderCount.length);
+        } else {
+          resolve(0);
+        }
+      } catch (error) {}
+    });
+  },
+  
+
+
+  getCODCount: () => {
+  
+    return new Promise(async (resolve, reject) => {
+      try {
+        let CODOrderCount = await db
+          .get()
+          .collection(collection.orderCollection)
+          .find({ "orderDetails.paymentMethod": "cashondelivery" })
+          .toArray();
+        if (CODOrderCount) {
+          resolve(CODOrderCount.length);
+        } else {
+          resolve(0);
+        }
+      } catch (error) {}
+    });
+  },
 
 
 

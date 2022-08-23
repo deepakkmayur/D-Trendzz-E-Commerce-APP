@@ -127,9 +127,10 @@
                         </div>
                     </div>
 
-                    <div class="text-uppercase">My recent orders</div>
+                    <div class="text-uppercase">My recent orders  </div>
 
                     {{#each orderlistProducts}}
+                    
                     <div class="order my-3 bg-light">
                         <div class="row d-flex flex-row justify-content-around">
                             
@@ -199,10 +200,13 @@
                                                                             </div>
 
                                                                         </div>
-
+      
+                                                                         
                                                                         <ul id="progressbar-2"
                                                                             class="d-flex justify-content-between mx-0 mt-0 mb-5 px-0 pt-0 pb-2">
-
+                                                                            {{#if this.orderProcessing}}
+                                                                            <h1>Your order under process</h1>
+                                                                            {{/if}}
                                                                             {{#if this.pending}}
                                                                             <li class="step0 active text-center"
                                                                                 id="step1"></li>
@@ -253,6 +257,11 @@
                                                                         {{#if this.cancelled}}
                                                                         <h1 class="d-flex justify-content-center">
                                                                             This order is no-longer available</h1>
+                                                                       
+                                                                        {{else this.orderProcessing}}
+                                                                        {{#if orderProcessing}}
+                                                                         <p></p>
+                                                                        
                                                                         {{else}}
                                                                         <div class="d-flex justify-content-between">
                                                                             <div class="d-lg-flex align-items-center">
@@ -297,6 +306,7 @@
                                                                             </div>
 
                                                                         </div>
+                                                                        {{/if}}
                                                                         {{/if}}
 
                                                                     </div>

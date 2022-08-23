@@ -23,10 +23,14 @@ const verifyLogin = function (req, res, next) {
 };
 
 
-router.get("/", function (req, res,next) {
+router.get("/", async (req, res,next)=> {
   try {
     if (req.session.isadminLogged) {
-      res.render("admin/admindashboard", { layout: "admin-main-layout" });
+     let totalOrderCount=await adminHelpers.getTotalUsers()
+     let totalUserCount=await adminHelpers.getUserCount()
+     let onlinePaymentOrderCount=await adminHelpers.getOnlinePaymentCount()
+     let CODOrderCount=await adminHelpers.getCODCount()
+      res.render("admin/admindashboard", { layout: "admin-main-layout" ,totalOrderCount,totalUserCount,onlinePaymentOrderCount,CODOrderCount});
     } else res.redirect("/admin/login");                
     
   } catch (error) {
@@ -343,7 +347,7 @@ router.get('/change_status',async (req,res,next)=>{
 router.get('/view_userProduct',(req,res,next)=>{
 try {
  const productDetails= userHelpers.viewEachproduct(req.params.id)
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////---///////
+  
 } catch (error) {
   console.log(error);
   next(error)
@@ -352,9 +356,12 @@ try {
 
 })
 
-router.get('/coupon_management',verifyLogin,async (req,res,next)=>{
+router.get('/coupon_management',verifyLogin,async (req,res,next)=>{        
 try {
+ 
    const couponDetails=await adminHelpers.getCouponDetails()
+   console.log(couponDetails,"========================================couponDetails");
+  
 
   res.render('admin/couponManagement',{ layout: "admin-main-layout",couponDetails })
   
@@ -396,6 +403,19 @@ router.get('/delete_coupon',async(req,res,next)=>{
     
     await adminHelpers.deleteCoupon(req.query.id)
     res.redirect('/admin/coupon_management')
+    
+  } catch (error) {
+    console.log(error);
+    next(error)
+  }
+
+})
+
+router.get('/coupon_status',async(req,res,next)=>{    
+  try {
+    // console.log(req.query,"----------------------status");    
+    await adminHelpers.couponStatusChange(req.query.id,req.query.status)
+    res.redirect('back')
     
   } catch (error) {
     console.log(error);

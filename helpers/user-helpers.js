@@ -20,7 +20,7 @@ const instance = new Razorpay({
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "deepaktemporary20@gmail.com",
+    user: process.env.NODEMAILER_EMAIL,
     pass: process.env.MAIL_PASSWORD,
   },
 });
@@ -880,7 +880,7 @@ module.exports = {
 
         db.get()
           .collection(collection.orderCollection)
-          .insertOne({ userId: objectId(userID), orderDetails: orderObj })
+          .insertOne({ userId: objectId(userID), orderDetails: orderObj, orderProcessing:true })
           .then(async (data) => {
             if (status === "placed") {
               await db
@@ -937,6 +937,7 @@ module.exports = {
             {
               $set: {
                 "orderDetails.status": "placed",
+                 
               },
             }
           );

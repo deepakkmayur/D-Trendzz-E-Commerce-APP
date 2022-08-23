@@ -68,6 +68,10 @@
  <link rel="stylesheet" type="text/css" href="/user/css/applyCouponModal.css">
   {{/if}}
 
+    {{#if error_404}}
+   <link rel="stylesheet" type="text/css" href="/user/css/404_errorpage.css">
+  {{/if}}
+
   {{#if checkout_address}}
   <link rel="stylesheet" type="text/css" href="/user/css/checkout_address.css" />
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -77,6 +81,7 @@
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
   {{/if}}
+
 
 
 
@@ -96,6 +101,10 @@
 {{#if orderlistTable}}
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 {{/if}}
+
+{{#if error_404}}
+  <script src="/user/js/404_errorpage.js"></script>
+  {{/if}}
   {{!-- user validation --}}
 
 

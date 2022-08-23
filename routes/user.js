@@ -18,7 +18,7 @@ let cartCount = 0;
 let shopProducts;
 
 router.get("/", async (req, res, next) => {
-  console.log("-------------------------1");
+  console.log("----------------------------------------------------1");
   try {
     if (req.session.loggedIn) {
       var cartCount = await userHelpers.getCartcount(req.session.user._id);
@@ -43,7 +43,7 @@ router.get("/", async (req, res, next) => {
               cartCount,
             });
           } else {
-            res.render("user/error", { layout: "main-layout" });
+           return res.render("user/error", { layout: "main-layout" });
           }
         })
         .catch((error) => {
@@ -405,7 +405,7 @@ router.get("/cart", verifyLogin, async (req, res, next) => {
     let total = await userHelpers.getCarttotal(req.session.user._id);
     let cartCount = await userHelpers.getCartcount(req.session.user._id);
     let couponData = await userHelpers.getCouponData();
-    // console.log(couponData,"------------------------------------------------------------couponData----------------------------------------");
+
     res.render("user/cart", {
       layout: "main-layout",
       user: true,
@@ -418,10 +418,11 @@ router.get("/cart", verifyLogin, async (req, res, next) => {
       applyCouponModal: true,
       couponData,
     });
+    
   } catch (error) {
     console.log(error);
-    next(error);
-  }
+     next(error);
+  }    
 });
 
 router.post("/cart", (req, res, next) => {
@@ -654,7 +655,7 @@ router.post("/search", (req, res, next) => {
 });
 
 router.get("/error", verifyLogin, (re, res) => {
-  res.render("user/error", { layout: "main-layout" });
+  res.render("error", { layout: "main-layout" ,error_404:true});  
 });
 
 module.exports = router;
