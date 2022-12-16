@@ -1,10 +1,11 @@
-const { response } = require("express");
+// const { response } = require("express");
 const express = require("express");
 const db = require("../config/database");
 const router = express.Router();
 const url = require("url");
 
 const userHelpers = require("../helpers/user-helpers");
+const passport = require('passport');
 
 const verifyLogin = function (req, res, next) {
   if (req.session.loggedIn) {
@@ -15,16 +16,23 @@ const verifyLogin = function (req, res, next) {
 };
 
 let cartCount = 0;
-let shopProducts;
+let wishlistCount=0;
+
 
 router.get("/", async (req, res, next) => {
-  console.log("----------------------------------------------------1");
+
   try {
     if (req.session.loggedIn) {
-      var cartCount = await userHelpers.getCartcount(req.session.user._id);
-    } else {
-      console.log("--------------------------------first 1");
-      var cartCount = 0;
+       cartCount = await userHelpers.getCartcount(req.session.user._id);
+       wishlistCount = await userHelpers.getWishlistcount(req.session.user._id);
+
+
+    } 
+    else {
+      
+      cartCount = 0;
+      wishlistCount=0
+ 
     }
 
     if (req.query.search) {
@@ -41,6 +49,7 @@ router.get("/", async (req, res, next) => {
               layout: "main-layout",
               BRINGDATA: searchData,
               cartCount,
+              wishlistCount
             });
           } else {
            return res.render("user/error", { layout: "main-layout" });
@@ -60,6 +69,8 @@ router.get("/", async (req, res, next) => {
             layout: "main-layout",
             BRINGDATA: bringdata,
             cartCount,
+            wishlistCount
+            
           });
 
           // console.log(req.session.user.firstname);
@@ -123,6 +134,7 @@ router.post("/signup", (req, res, next) => {
 });
 
 router.post("/login", (req, res, next) => {
+  console.log(req.body,);
   try {
     userHelpers.doLogin(req.body).then((response) => {
       if (response.status) {
@@ -146,6 +158,34 @@ router.post("/login", (req, res, next) => {
     next(error);
   }
 });
+
+//google authentication riotes
+
+router.get('/auth' , passport.authenticate('google', { scope:
+  [ 'email', 'profile' ]
+}));
+
+// Auth Callback
+router.get( '/auth/callback',
+  passport.authenticate( 'google', {
+      successRedirect: '/auth/callback/success',
+      failureRedirect: '/auth/callback/failure'
+}));
+
+// Success 
+router.get('/auth/callback/success' , (req , res) => {
+  if(!req.user)
+      res.redirect('/auth/callback/failure');
+  res.send("Welcome " + req.user.email);
+});
+
+// failure
+router.get('/auth/callback/failure' , (req , res) => {
+  res.send("Error");
+})
+
+//google authentication ends
+
 
 router.get("/user_logout", (req, res, next) => {
   try {
@@ -234,9 +274,10 @@ router.get("/user_dashboard", verifyLogin, async (req, res, next) => {
       req.session.user._id
     );
     let orderCount = await userHelpers.getOrderCount(req.session.user._id);
-    let orderlistProducts = await userHelpers.getOrderedItems(
+    let orderlistProducts = await userHelpers.getOrderedLimitedItems(
       req.session.user._id
     );
+
     res.render("user/user-dashboard", {
       layout: "main-layout",
       user: true,
@@ -296,12 +337,15 @@ router.post("/change_password", (req, res, next) => {
   }
 });
 
+
+let shopProducts;
+
 router.get("/shop", (req, res, next) => {
   try {
     userHelpers.doBringdata().then((bringData) => {
       if (bringData) {
         shopProducts = bringData;
-        // console.log("cart", cartCount);
+
         res.redirect("/filter-shop");
       }
     });
@@ -354,11 +398,39 @@ router.get("/filter-shop", (req, res, next) => {
   }
 });
 
-router.get("/view_product/:id", verifyLogin, (req, res, next) => {
+
+
+
+ 
+
+router.get("/price_filter", async (req, res,next) => {
   try {
+   
+    const filteredData=await userHelpers.getFilteredData(req.query)
+    shopProducts=filteredData
+       console.log(filteredData,"//////////////////////////////////////////////////////////////////////////////////////filteredData");
+       res.redirect("/filter-shop");
+  } catch (error) {
+    
+    console.log((error));
+    next(error)
+  }
+  
+  });
+
+
+
+
+router.get("/view_product/:id", (req, res, next) => {
+
+
+  try {
+
     userHelpers.viewEachproduct(req.params.id).then((productDetails) => {
-      if (productDetails) {
-        return res.render("user/view-product", {
+    
+      // if (productDetails) {
+     
+         res.render("user/view-product", {
           layout: "main-layout",
           user: true,
           isuserloggedin: req.session.loggedIn,
@@ -366,8 +438,10 @@ router.get("/view_product/:id", verifyLogin, (req, res, next) => {
           productDetails,
           cartCOUNT: cartCount,
         });
-      }
-      res.redirect("/");
+      // }else{
+
+      //   res.redirect("back");
+      // }
     });
   } catch (error) {
     console.log(error);
@@ -405,6 +479,7 @@ router.get("/cart", verifyLogin, async (req, res, next) => {
     let total = await userHelpers.getCarttotal(req.session.user._id);
     let cartCount = await userHelpers.getCartcount(req.session.user._id);
     let couponData = await userHelpers.getCouponData();
+  
 
     res.render("user/cart", {
       layout: "main-layout",
@@ -427,7 +502,7 @@ router.get("/cart", verifyLogin, async (req, res, next) => {
 
 router.post("/cart", (req, res, next) => {
   try {
-    userHelpers.changeProductQuantity(req.body).then(() => {
+    userHelpers.changeProductQuantity(req.body).then((response) => {
       res.json(response);
     });
   } catch (error) {
@@ -443,6 +518,7 @@ router.post("/apply_coupon", async (req, res, next) => {
       req.body.coupon_code,
       req.session.user._id
     );
+   
 
     res.json(couponAppliedData);
   } catch (error) {
@@ -463,6 +539,7 @@ router.get("/delete_from_cart/:id", verifyLogin, (req, res, next) => {
 });
 
 router.get("/proceed_to_checkout", verifyLogin, async (req, res, next) => {
+ 
   try {
     let cartitems = await userHelpers.getCartproducts(req.session.user._id);
     if (cartitems.length != 0) {
@@ -579,6 +656,7 @@ router.get("/orderlist_page", verifyLogin, (req, res, next) => {
     userHelpers
       .getOrderedItems(req.session.user._id)
       .then((orderlistProducts) => {
+      
         res.render("user/orderlistpage", {
           layout: "main-layout",
           user: true,
@@ -654,8 +732,18 @@ router.post("/search", (req, res, next) => {
   }
 });
 
-router.get("/error", verifyLogin, (re, res) => {
+router.get("/error", verifyLogin, (req, res) => {
   res.render("error", { layout: "main-layout" ,error_404:true});  
+});
+
+
+
+
+
+
+router.get("/error",  (req, res) => {
+
+  res.render("error", { layout: "main-layout"});  
 });
 
 module.exports = router;

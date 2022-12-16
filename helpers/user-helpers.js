@@ -4,12 +4,13 @@ const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
 const crypto = require("crypto");
-const { resolve } = require("path");
-const { productCollection } = require("../config/collection");
+// const { resolve, resolve } = require("path");
+// const { productCollection } = require("../config/collection");
 const objectId = require("mongodb").ObjectId;
 const Razorpay = require("razorpay");
-const { ObjectId } = require("mongodb");
-const { nextTick } = require("process");
+const { resolve } = require("path");
+// const { ObjectId } = require("mongodb");
+// const { nextTick } = require("process");
 require("dotenv").config();
 
 const instance = new Razorpay({
@@ -61,15 +62,15 @@ module.exports = {
           .get()
           .collection(collection.userCollection)
           .findOne({ email: userData.email, isblockeduser: false });
-  
+
         if (user) {
           bcrypt.compare(userData.password, user.password).then((data) => {
-        
+
             if (data) {
-       
+
               response.user = user;
               response.status = true;
-      
+
               resolve(response);
             } else {
               console.log("login failed");
@@ -80,7 +81,7 @@ module.exports = {
           console.log("no data found");
           resolve({ status: false });
         }
-        
+
       } catch (error) {
         console.log(error);
         reject(error)
@@ -90,35 +91,35 @@ module.exports = {
 
   // profile
   changePassword: (userDetails) => {
-    let { password, userId } = userDetails;   
-      return new Promise(async (resolve, reject) => {
-        try {
-          let findUser = await db
+    let { password, userId } = userDetails;
+    return new Promise(async (resolve, reject) => {
+      try {
+        let findUser = await db
+          .get()
+          .collection(collection.userCollection)
+          .findOne({ _id: objectId(userId) });
+        if (findUser) {
+          password = await bcrypt.hash(password, 10);
+          let update = db
             .get()
             .collection(collection.userCollection)
-            .findOne({ _id: objectId(userId) });
-          if (findUser) {
-            password = await bcrypt.hash(password, 10);
-            let update = db
-              .get()
-              .collection(collection.userCollection)
-              .updateOne(
-                { _id: objectId(userId) },
-                { $set: { password: password } }
-              );
-            if (update) {
-              resolve();
-            }
+            .updateOne(
+              { _id: objectId(userId) },
+              { $set: { password: password } }
+            );
+          if (update) {
+            resolve();
           }
-          
-        } catch (error) {
-          console.log(error);
-          reject(error)
-          
         }
-      });
-   
- 
+
+      } catch (error) {
+        console.log(error);
+        reject(error)
+
+      }
+    });
+
+
   },
 
   bringProfileData: (userID) => {
@@ -169,7 +170,7 @@ module.exports = {
   postReset: (userData) => {
     return new Promise((resolve, reject) => {
       try {
-        
+
         crypto.randomBytes(32, (err, buffer) => {
           if (err) {
             resolve();
@@ -223,23 +224,23 @@ module.exports = {
 
   getNewPass: (token) => {
     return new Promise((resolve, reject) => {
-    try {
-      db.get()
-        .collection(collection.userCollection)
-        .findOne({ resetToken: token, userTokenExpire: { $gt: Date.now() } })
-        .then((response) => {
-          console.log(response);
-          if (response) {
-            resolve(response);
-          } else {
-            resolve();
-          }
-        });
-      
-    } catch (error) {
-      console.log(error);
-      reject(error)
-    }
+      try {
+        db.get()
+          .collection(collection.userCollection)
+          .findOne({ resetToken: token, userTokenExpire: { $gt: Date.now() } })
+          .then((response) => {
+            console.log(response);
+            if (response) {
+              resolve(response);
+            } else {
+              resolve();
+            }
+          });
+
+      } catch (error) {
+        console.log(error);
+        reject(error)
+      }
     });
   },
 
@@ -248,7 +249,7 @@ module.exports = {
 
     return new Promise((resolve, reject) => {
       try {
-        
+
         db.get()
           .collection(collection.userCollection)
           .findOne({ _id: objectId(objId), userTokenExpire: { $gt: Date.now() } })
@@ -291,8 +292,8 @@ module.exports = {
   doBringdata: () => {
     return new Promise(async (resolve, reject) => {
       try {
+        console.log(db);
         const bringdata = await db
-          .get()
           .collection(collection.productCollection)
           .find()
           .toArray();
@@ -301,7 +302,7 @@ module.exports = {
         } else {
           resolve();
         }
-        
+
       } catch (error) {
         console.log(error);
         reject(error)
@@ -320,7 +321,7 @@ module.exports = {
         if (productDetails) {
           resolve(productDetails);
         } else resolve();
-        
+
       } catch (error) {
         console.log(error);
         reject(error)
@@ -369,17 +370,17 @@ module.exports = {
     };
     return new Promise(async (resolve, reject) => {
       try {
-        
+
         let userCart = await db
           .get()
           .collection(collection.cartCollection)
           .findOne({ user: objectId(userId) });
-  
+
         if (userCart) {
           let productExist = userCart.products.findIndex((product) => {
             return product.item == proId;
           });
-  
+
           if (productExist != -1) {
             return db
               .get()
@@ -396,7 +397,7 @@ module.exports = {
                 resolve(response);
               });
           }
-  
+
           db.get()
             .collection(collection.cartCollection)
             .updateOne(
@@ -431,7 +432,7 @@ module.exports = {
   getCartproducts: (userId) => {
     return new Promise(async (resolve, reject) => {
       try {
-        
+
         let cartProducts = await db
           .get()
           .collection(collection.cartCollection)
@@ -468,7 +469,7 @@ module.exports = {
             },
           ])
           .toArray();
-   
+
         resolve(cartProducts);
       } catch (error) {
         console.log(error);
@@ -478,10 +479,11 @@ module.exports = {
   },
 
   changeProductQuantity: (details) => {
+   
     details.count = parseInt(details.count);
     return new Promise((resolve, reject) => {
       try {
-        
+
         db.get()
           .collection(collection.cartCollection)
           .updateOne(
@@ -494,6 +496,7 @@ module.exports = {
             }
           )
           .then((response) => {
+         
             resolve(response);
           });
       } catch (error) {
@@ -511,15 +514,15 @@ module.exports = {
           .get()
           .collection(collection.cartCollection)
           .findOne({ user: objectId(userId) });
-  
+
         if (cartData) {
           cartCount = cartData.products.length;
-  
+
           resolve(cartCount);
         } else {
           resolve(cartCount);
         }
-        
+
       } catch (error) {
         console.log(error);
         reject(error)
@@ -602,12 +605,12 @@ module.exports = {
           .findOne({ userId: objectId(userId) });
         if (userWishlist) {
           let proExist = userWishlist.products.findIndex((product) => {
-            // console.log("-------------user already exist");
+      
 
             return product.item == proId;
           });
           if (proExist != -1) {
-            // console.log("-------------product already exist");
+       
             db.get()
               .collection(collection.wishlistCollection)
               .updateOne(
@@ -876,12 +879,12 @@ module.exports = {
           totalAmount: cartTotal,
           products: cartItem,
           date: new Date().toDateString(),
+
         };
 
         db.get()
-          .collection(collection.orderCollection)
-          .insertOne({ userId: objectId(userID), orderDetails: orderObj, orderProcessing:true })
-          .then(async (data) => {
+          .collection(collection.orderCollection).insertOne({ userId: objectId(userID), orderDetails: orderObj, orderProcessing: true, sortDate: new Date() }).then(async (data) => {
+           
             if (status === "placed") {
               await db
                 .get()
@@ -909,8 +912,8 @@ module.exports = {
         let hmac = crypto.createHmac("sha256", process.env.RAZORPAY_SECRET_KEY);
         hmac.update(
           details["payment[razorpay_order_id]"] +
-            "|" +
-            details["payment[razorpay_payment_id]"]
+          "|" +
+          details["payment[razorpay_payment_id]"]
         );
         hmac = hmac.digest("hex");
         if (hmac == details["payment[razorpay_signature]"]) {
@@ -937,7 +940,7 @@ module.exports = {
             {
               $set: {
                 "orderDetails.status": "placed",
-                 
+
               },
             }
           );
@@ -979,28 +982,79 @@ module.exports = {
     });
   },
 
+  // getOrderedItems: (userID) => {
+  //   return new Promise(async (resolve, reject) => {
+  //     try {
+  //       let getdetails = await db
+  //         .get()
+  //         .collection(collection.orderCollection)
+  //         .aggregate([
+  //           { $match: { userId: objectId(userID) } },
+  //           { $unwind: "$orderDetails" },
+  //           { $unwind: "$orderDetails.products" },
+
+  //           // {$addFields:{newID:ObjectId()}}
+  //         ])
+  //         .toArray();
+
+  //       resolve(getdetails);
+  //     } catch (error) {
+  //       console.log(error);
+  //       reject(error);
+  //     }
+  //   });
+  // },
+
+  getOrderedLimitedItems: (userID) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const orders = await db.get().collection(collection.orderCollection).aggregate([
+          {
+            $match: { userId: objectId(userID) }
+          }, {
+            $sort: { sortDate: -1 }
+          }, {
+            $limit: 2
+          }
+        ]).toArray()
+        if (orders.length != 0) {
+
+          resolve(orders)
+        } else {
+          resolve()
+        }
+      } catch (error) {
+        console.log(error);
+        reject(error)
+      }
+    })
+  },
+
+
   getOrderedItems: (userID) => {
     return new Promise(async (resolve, reject) => {
       try {
-        let getdetails = await db
-          .get()
-          .collection(collection.orderCollection)
-          .aggregate([
-            { $match: { userId: objectId(userID) } },
-            { $unwind: "$orderDetails" },
-            { $unwind: "$orderDetails.products" },
-
-            // {$addFields:{newID:ObjectId()}}
-          ])
-          .toArray();
-
-        resolve(getdetails);
+        const orders = await db.get().collection(collection.orderCollection).aggregate([
+          {
+            $match: { userId: objectId(userID) }
+          }, {
+            $sort: { sortDate: 1 }
+          },
+        ]).toArray()
+        if (orders.length != 0) {
+          resolve(orders)
+        } else {
+          resolve()
+        }
       } catch (error) {
         console.log(error);
-        reject(error);
+        reject(error)
       }
-    });
+    })
   },
+
+
+
 
   generateRazorpay: (orderID, cartTotal) => {
     return new Promise((resolve, reject) => {
@@ -1182,4 +1236,61 @@ module.exports = {
       }
     });
   },
+
+
+
+  getFilteredData: (filterOrder) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        if (filterOrder.filter == 'low_to_high') {
+
+          const sortedItems = await db.get().collection(collection.productCollection).aggregate([        
+            {
+              $sort: { price: 1 }
+            }
+          ]).toArray()
+            
+          if(sortedItems){
+            resolve(sortedItems)
+          }else{
+            resolve()
+          }
+        } else {
+          const sortedItems = await db.get().collection(collection.productCollection).aggregate([
+            {
+              $sort: { price: -1 }
+            }
+          ]).toArray()
+          if(sortedItems){
+            resolve(sortedItems)
+          }else{
+            resolve()
+          }
+        }
+
+      } catch (error) {
+        console.log(error);
+        reject(error)
+      }
+    })
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
 };
+
+
+
+
+
+

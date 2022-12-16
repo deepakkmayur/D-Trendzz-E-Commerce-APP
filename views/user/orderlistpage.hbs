@@ -24,11 +24,15 @@
 
 
 				</tr>
+			
 
 			</thead>
 			<tbody>
 				{{#each orderlistProducts}}
 				<tr>
+				{{!-- <h1>{{this.orderDetails.products.product._id}}</h1> --}}
+						
+			
                <td>{{inc @index}}</td>
 					<td>{{this.orderDetails.deliveryDetails.name }}</td>
 					<td>{{this.orderDetails.products.product.product_name}}</td>
@@ -164,7 +168,9 @@
 
               
 
-					<td> <a href="/view_product/{{this.orderDetails.products.product._id}}" class="btn"
+					{{!-- <td> <a href="/view_product/{{this.orderDetails.products.product._id}}" class="btn"
+							style="background-color: rgb(41, 218, 13);">View </a> </td> --}}
+							<td> <a href="/view_product/{{this._id}}" class="btn"
 							style="background-color: rgb(41, 218, 13);">View </a> </td>
 				</tr>
 				{{/each}}
@@ -177,6 +183,9 @@
 
 
 </div>
+
+
+
 
 
 {{>user-footer}}

@@ -15,6 +15,10 @@ const userRouter = require("./routes/user");
 const adminRouter = require("./routes/admin");
 const multer = require("multer");
 
+
+const passport = require('passport');
+require('./middleware/passport')
+
 const app = express();
 
 // view engine setup
@@ -64,6 +68,11 @@ app.use('/view_product', express.static(path.join(__dirname, "public")))
 app.use(nocache());
 
 app.use(session({ secret: "key", cookie: { maxAge: 600000000 } }));
+///google authentication passport start
+app.use(passport.initialize());
+app.use(passport.session());
+///google authentication passport end
+    
 
 // flash should be called after sessoin//
 app.use(flash());
@@ -107,8 +116,8 @@ app.use(function (err, req, res, next) {
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
   // render the error page
-  res.status(err.status || 500);
-  res.render("error");
+  res.status(err.status || 500);                      
+  res.render("error");                               
 });
 
 

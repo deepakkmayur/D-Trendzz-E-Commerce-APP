@@ -58,38 +58,16 @@
                   </div>
 
                   <ul>
-                     <li class="p-b-6">
-                        <a href="#" class="filter-link stext-106 trans-04">
-                           Default
-                        </a>
-                     </li>
+                    
 
                      <li class="p-b-6">
-                        <a href="#" class="filter-link stext-106 trans-04">
-                           Popularity
-                        </a>
-                     </li>
-
-                     <li class="p-b-6">
-                        <a href="#" class="filter-link stext-106 trans-04">
-                           Average rating
-                        </a>
-                     </li>
-
-                     <li class="p-b-6">
-                        <a href="#" class="filter-link stext-106 trans-04 filter-link-active">
-                           Newness
-                        </a>
-                     </li>
-
-                     <li class="p-b-6">
-                        <a href="#" class="filter-link stext-106 trans-04">
+                       <a href="/price_filter?filter=low_to_high" class="filter-link stext-106 trans-04">
                            Price: Low to High
                         </a>
                      </li>
 
                      <li class="p-b-6">
-                        <a href="#" class="filter-link stext-106 trans-04">
+                        <a href="/price_filter?filter=high_to_low" class="filter-link stext-106 trans-04">
                            Price: High to Low
                         </a>
                      </li>
@@ -150,42 +128,75 @@
          <div class="container" id="refresh">
 
             <div class="row isotope-grid">
-               {{#each bringdata}}
-               <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-                  <!-- Block2 -->
-                  <div class="block2">
-                     <div class="block2-pic hov-img0">
-                        <img height="300rem" style="object-fit: contain;  border-radius: 75px;" src="/multerImage/{{this.img_id.[0]}}" alt="IMG-PRODUCT">
+             			{{#each bringdata}}
+			<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
+				<!-- Block2 -->
+				<div class="block2  ">
 
-                        <a href="/view_product/{{this._id}}"
-                           class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 ">
-                          View Product
-                        </a>
-                     </div>
 
-                     <div class="block2-txt flex-w flex-t p-t-14">
-                        <div class="block2-txt-child1 flex-col-l ">
-                           <a href="#" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">           
-                              {{this.product_name}}
-                           </a>
 
-                           <span class="stext-105 cl3">
-                              ${{this.price}}
-                           </span>
-                        </div>
+					<div class="block2-pic hov-img0">
+						<img height="300rem" style="object-fit: contain;  border-radius: 75px;"
+							src="/multerImage/{{img_id.[0]}}" alt="IMG-PRODUCT">
 
-                        <div class="block2-txt-child2 flex-r p-t-3">
-                           <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                              <img class="icon-heart1 dis-block trans-04" src="/user/images/icons/icon-heart-01.png"
-                                 alt="ICON">
-                              <img class="icon-heart2 dis-block trans-04 ab-t-l"
-                                 src="/user/images/icons/icon-heart-02.png" alt="ICON">
-                           </a>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            {{/each}}
+						<a href="/view_product/{{this._id}}"
+							class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 ">
+							View Product
+						</a>
+					</div>
+
+					<div class="block2-txt flex-w flex-t p-t-14 d-flex justify-content-center ">
+						<div class="block2-txt-child1 flex-col-l  ms-5">
+
+							<a href="#" class="font-weight-bold text-dark text-uppercase fs-18">
+								{{this.product_name}}
+							</a>
+
+
+
+							<span class="stext-105 cl3 font-weight-bold  " style="color:#7a7a7a ;">
+								{{this.brand}}
+							</span>
+							<span class="fs-17 font-weight-bold text-dark">
+								₹ {{this.price}}.00 <span class="ml-3" style="text-decoration: line-through; color: rgb(227, 8, 8);">₹ {{this.actualprice}}.00</span>
+								<span style="font-size:20px; font-family: fantasy; color: rgb(15, 202, 30);"  class="ml-2"> {{this.discount}} % Off</span>
+							</span>
+							
+
+							{{!-- <span class="stext-105 cl3 text-secondary" style="font-size: .8em">
+								{{this.description}}
+							</span> --}}
+
+
+						</div>
+
+						<div class="block2-txt-child2 flex-r p-t-3">
+
+
+
+                      <a onclick="addToCart('{{this._id}}')" style="margin-right: 10px;">
+								<img src="/images/shopping-cart.png" width="25px" >
+							
+							 </a>
+
+
+
+								<a onclick="addToWishlist('{{this._id}}')" style="height: 25px ;color: aliceblue;"
+								class="btn-addwish-b2 dis-block pos-relative ">
+								<img class="icon-heart1 dis-block trans-04" src="/user/images/icons/icon-heart-01.png"
+									alt="ICON" style="height: 25px;">
+								<img class="icon-heart2 dis-block trans-04 ab-t-l" src="/user/images/icons/icon-heart-02.png"
+									alt="ICON" style="height: 25px;">
+							</a>
+							
+ 
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+			{{/each}}
             </div>
 
 
@@ -215,7 +226,7 @@
 </div>
 
 <!-- Modal1 -->
-<div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
+{{!-- <div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
    <div class="overlay-modal1 js-hide-modal1"></div>
 
    <div class="container">
@@ -271,58 +282,11 @@
 
             <div class="col-md-6 col-lg-5 p-b-30">
                <div class="p-r-50 p-t-5 p-lr-0-lg">
-                  <h4 class="mtext-105 cl2 js-name-detail p-b-14">
-                     Lightweight Jacket
-                  </h4>
-
-                  <span class="mtext-106 cl2">
-                     $58.79
-                  </span>
-
-                  <p class="stext-102 cl3 p-t-23">
-                     Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare
-                     feugiat.
-                  </p>
-
+                  
                   <!--  -->
                   <div class="p-t-33">
-                     <div class="flex-w flex-r-m p-b-10">
-                        <div class="size-203 flex-c-m respon6">
-                           Size
-                        </div>
-
-                        <div class="size-204 respon6-next">
-                           <div class="rs1-select2 bor8 bg0">
-                              <select class="js-select2" name="time">
-                                 <option>Choose an option</option>
-                                 <option>Size S</option>
-                                 <option>Size M</option>
-                                 <option>Size L</option>
-                                 <option>Size XL</option>
-                              </select>
-                              <div class="dropDownSelect2"></div>
-                           </div>
-                        </div>
-                     </div>
-
-                     <div class="flex-w flex-r-m p-b-10">
-                        <div class="size-203 flex-c-m respon6">
-                           Color
-                        </div>
-
-                        <div class="size-204 respon6-next">
-                           <div class="rs1-select2 bor8 bg0">
-                              <select class="js-select2" name="time">
-                                 <option>Choose an option</option>
-                                 <option>Red</option>
-                                 <option>Blue</option>
-                                 <option>White</option>
-                                 <option>Grey</option>
-                              </select>
-                              <div class="dropDownSelect2"></div>
-                           </div>
-                        </div>
-                     </div>
+                     
+                  
 
                      <div class="flex-w flex-r-m p-b-10">
                         <div class="size-204 flex-w flex-m respon6-next">
@@ -376,7 +340,7 @@
          </div>
       </div>
    </div>
-</div>
+</div> --}}
 
 
 

@@ -66,24 +66,31 @@
             <i class="zmdi zmdi-search"></i>
           </div>
           {{! desktop cart icon}}
-
-          <div
+          <div id="refresh-cartcount">
+           <a href="/cart"  > 
+          <div 
             class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
             data-notify="{{cartCount}}"
           >
-            <a href="/cart"><i class="zmdi zmdi-shopping-cart"></i></a>
+          <i class="zmdi zmdi-shopping-cart"></i>
+            
+          </div>
+         </a>
 
           </div>
 
           {{! desktop wishlist icon }}
+           <div id="refresh-wishlistcount">
           <a
             href="/wishlist"
-            class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11"
-            data-notify="0"
+            {{!-- class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11" --}}
+             class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11  icon-header-noti js-show-cart"
+            data-notify="{{wishlistCount}}"
           >
             <i class="zmdi zmdi-favorite-outline"></i>
           </a>
-
+          </div>
+       
           {{#if isuserloggedin}}
             <div class="">
               <a

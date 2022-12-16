@@ -350,6 +350,7 @@ module.exports = {
                   delivered: false,
                   out_for_delivery: false,
                   pending: false,
+                  orderProcessing:false
                 },
               }
             );
@@ -373,6 +374,7 @@ module.exports = {
                   out_for_delivery: false,
                   shipped: false,
                   cancelled: false,
+                  orderProcessing:false
                 },
               }
             );
@@ -397,6 +399,7 @@ module.exports = {
 
                   delivered: false,
                   pending: false,
+                  orderProcessing:false
                 },
               }
             );
@@ -420,6 +423,7 @@ module.exports = {
                   shipped: false,
                   cancelled: false,
                   pending: false,
+                  orderProcessing:false
                 },
               }
             );
@@ -443,6 +447,7 @@ module.exports = {
                   out_for_delivery: false,
                   delivered: false,
                   pending: false,
+                  orderProcessing:false
                 },
               }
             );

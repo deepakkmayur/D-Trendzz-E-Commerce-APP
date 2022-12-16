@@ -1,5 +1,5 @@
 <div class="container-fluid"
-    style="height:max-content;   background: rgb(194,195,195);background: linear-gradient(103deg, rgba(194,195,195,1) 7%, rgba(180,255,244,1) 71%, rgba(225,226,226,1) 100%);">
+    style="height:100vh;   background: rgb(194,195,195);background: linear-gradient(103deg, rgba(194,195,195,1) 7%, rgba(180,255,244,1) 71%, rgba(225,226,226,1) 100%);">
 
     <nav class="navbar navbar-expand-lg navbar-light bg-ligh">
         <div class="container" style="background-color:#f0ecec;">
@@ -28,7 +28,7 @@
                         <a class="nav-link active" aria-current="page" href="/">Home
                             <span class="fas fa-th-large px-1"></span></a>
                     </li>
-             
+
                     <li class="nav-item">
                         <p class="nav-link">
                             Hello<span class="text-uppercase">
@@ -46,7 +46,7 @@
                 <div id="sidebar" class="bg-purple">
                     <div class="h4 text-white">Account</div>
                     <ul>
-                        
+
                         <li>
                             <a href="/orderlist_page" class="text-decoration-none d-flex align-items-start">
                                 <div class="fas fa-box-open pt-2 me-3"></div>
@@ -127,210 +127,221 @@
                         </div>
                     </div>
 
-                    <div class="text-uppercase">My recent orders  </div>
+                    <div class="text-uppercase">My recent orders </div>
 
                     {{#each orderlistProducts}}
-                    
+
+
+
+
+
+
+
+
+
                     <div class="order my-3 bg-light">
-                        <div class="row d-flex flex-row justify-content-around">
-                            
-                            <div class="col-lg-4" style="">
-                                <div class="d-flex flex-column justify-content-between flex-wrap order-summary">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="d-flex flex-column justify-content-between order-summary">
                                     <div class="d-flex align-items-center">
-                                        <div class="text-uppercase">Order : {{@index}}</div>
-                                        {{! <div class="blue-label ms-auto text-uppercase">paid</div> }}
+                                        <div class="text-uppercase">Order {{inc @index}} </div>
+                                        <div class="blue-label ms-auto text-uppercase ml-2">
+                                            {{this.orderDetails.paymentMethod}}</div>
                                     </div>
-                                    <div class="fs-8">
-                                        <p style="font-size:20px; color: crimson;">Product
-                                            :{{this.orderDetails.products.product.product_name}}</p>
+                                    <div class="fs-8">{{this.orderDetails.date}}</div>
+                                    <div class="rating d-flex align-items-center pt-1">
+                                        <img src="https://www.freepnglogos.com/uploads/like-png/like-png-hand-thumb-sign-vector-graphic-pixabay-39.png"
+                                            alt=""><span class="px-2">Rating:</span>
+                                        {{!-- <span class="fas fa-star"></span>    --}}
+                                        <i class="fa fa-star" style="color:#eedc82" aria-hidden="true"></i>
+                                       <i class="fa fa-star" style="color:#eedc82" aria-hidden="true"></i>  
+                                       <i class="fa fa-star" style="color:#eedc82" aria-hidden="true"></i>
+                                        <i class="fa fa-star" style="color:#eedc82" aria-hidden="true"></i>
+                                    
+                                        <i class="fa fa-star" style="color:rgb(202, 197, 197)"  aria-hidden="true"></i>
                                     </div>
-                                     <div class="fs-8">
-                                        <p style="font-size:15px;">Price :
-                                            {{this.orderDetails.products.product.price}}</p>
-                                    </div>
-                                    <div class="fs-8">
-                                        <p style="font-size:15px;">Quantity
-                                            :{{this.orderDetails.products.quantity}}</p>
-                                    </div>
-                                    <div class="fs-8" style="padding-bottom: 36px;">{{this.orderDetails.date}}</div>
-                                  
                                 </div>
-                                
                             </div>
-                               <div style="height: 50px;;" ><img style="height:50px; margin-top: 60%;" src="/multerImage/{{this.orderDetails.products.product.img_id.[0]}}" ></div>
-                            <div class="col-lg-2">
+                            <div class="col-lg-8">
+
+
+
                                 <div class="d-sm-flex align-items-sm-start justify-content-sm-between">
 
-                                    <div class="">
+                                    <div class="status">Status : {{this.orderDetails.status}}</div>
+                                    {{!-- <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#onboardingSlideModal">Vertical Slider modal</button> --}}
+                                    <div class="btn btn-primary text-uppercase" data-toggle="modal" data-target="#modalTop{{this._id}}">
+                                        order info</div>
                                     </div>
 
 
 
-
-                                  
-
-                                    <!-- Large modal -->
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target=".bd-example-modal-lg{{this._id}}">Track Order</button>
-
-                                    <div class="modal fade bd-example-modal-lg{{this._id}} mt-5" tabindex="-1"
-                                        role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
-
-                                                <section class="vh-100" style="background-color: #000000; ">
-                                                    <div class="container py-5 h-100" style="margin-top: 20px;">
-                                                        <div
-                                                            class="row d-flex justify-content-center align-items-center h-100">
-                                                            <div class="col-12">
-                                                                <div class="card card-stepper text-black"
-                                                                    style="border-radius: 16px;">
-
-                                                                    <div class="card-body p-5">
-
-                                                                        <div
-                                                                            class="d-flex justify-content-between align-items-center mb-5">
-                                                                            <div>
-                                                                                <h5 class="mb-0">Price
-                                                                                    <span
-                                                                                        class="text-primary font-weight-bold">
-                                                                                        ₹
-                                                                                        {{this.orderDetails.products.product.price}}</span>
-                                                                                </h5>
-                                                                            </div>
-
-                                                                        </div>
-      
-                                                                         
-                                                                        <ul id="progressbar-2"
-                                                                            class="d-flex justify-content-between mx-0 mt-0 mb-5 px-0 pt-0 pb-2">
-                                                                            {{#if this.orderProcessing}}
-                                                                            <h1>Your order under process</h1>
-                                                                            {{/if}}
-                                                                            {{#if this.pending}}
-                                                                            <li class="step0 active text-center"
-                                                                                id="step1"></li>
-                                                                            <li class="step0 text-muted text-end"
-                                                                                id="step2"></li>
-                                                                            <li class="step0 text-muted text-end"
-                                                                                id="step3"></li>
-                                                                            <li class="step0 text-muted text-end"
-                                                                                id="step4"></li>
-                                                                            {{/if}}
-
-                                                                            {{#if this.shipped}}
-                                                                            <li class="step0 active text-center"
-                                                                                id="step1"></li>
-                                                                            <li class="step0 active text-center"
-                                                                                id="step2"></li>
-                                                                            <li class="step0 text-muted text-end"
-                                                                                id="step3"></li>
-                                                                            <li class="step0 text-muted text-end"
-                                                                                id="step4"></li>
-                                                                            {{/if}}
-
-                                                                            {{#if this.out_for_delivery}}
-                                                                            <li class="step0 active text-center"
-                                                                                id="step1"></li>
-                                                                            <li class="step0 active text-center"
-                                                                                id="step2"></li>
-                                                                            <li class="step0 active text-center"
-                                                                                id="step3"></li>
-                                                                            {{! <li class="step0 active text-center"
-                                                                                id="step1"></li> }}
-                                                                            <li class="step0 text-muted text-end"
-                                                                                id="step4"></li>
-                                                                            {{/if}}
-
-                                                                            {{#if this.delivered}}
-                                                                            <li class="step0 active text-center"
-                                                                                id="step1"></li>
-                                                                            <li class="step0 active text-center"
-                                                                                id="step2"></li>
-                                                                            <li class="step0 active text-center"
-                                                                                id="step3"></li>
-                                                                            <li class="step0 active text-center"
-                                                                                id="step4"></li>
-                                                                            {{/if}}
-
-                                                                        </ul>
-                                                                        {{#if this.cancelled}}
-                                                                        <h1 class="d-flex justify-content-center">
-                                                                            This order is no-longer available</h1>
-                                                                       
-                                                                        {{else this.orderProcessing}}
-                                                                        {{#if orderProcessing}}
-                                                                         <p></p>
-                                                                        
-                                                                        {{else}}
-                                                                        <div class="d-flex justify-content-between">
-                                                                            <div class="d-lg-flex align-items-center">
-                                                                                <i
-                                                                                    class="fas fa-clipboard-list fa-3x me-lg-4 mb-3 mb-lg-0"></i>
-                                                                                <div>
-                                                                                    <p class="fw-bold mb-1">Order
-                                                                                    </p>
-                                                                                    <p class="fw-bold mb-0">pending
-                                                                                    </p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="d-lg-flex align-items-center">
-                                                                                <i
-                                                                                    class="fas fa-box-open fa-3x me-lg-4 mb-3 mb-lg-0"></i>
-                                                                                <div>
-                                                                                    <p class="fw-bold mb-1">Order
-                                                                                    </p>
-                                                                                    <p class="fw-bold mb-0">Shipped
-                                                                                    </p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="d-lg-flex align-items-center">
-                                                                                <i
-                                                                                    class="fas fa-shipping-fast fa-3x me-lg-4 mb-3 mb-lg-0"></i>
-                                                                                <div>
-                                                                                    <p class="fw-bold mb-1">Order
-                                                                                    </p>
-                                                                                    <p class="fw-bold mb-0">Out for
-                                                                                        delivery</p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="d-lg-flex align-items-center">
-                                                                                <i
-                                                                                    class="fas fa-box-open fa-3x me-lg-4 mb-3 mb-lg-0"></i>
-                                                                                <div>
-                                                                                    <p class="fw-bold mb-1">Order
-                                                                                    </p>
-                                                                                    <p class="fw-bold mb-0">
-                                                                                        Delivered</p>
-                                                                                </div>
-                                                                            </div>
-
-                                                                        </div>
-                                                                        {{/if}}
-                                                                        {{/if}}
-
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </section>
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                {{!-- <div class="progressbar-track">
+                                <div class="progressbar-track">
+                                    {{#if this.pending}}
                                     <ul class="progressbar">
-
+                                        <li id="step-1" class="text-muted green"
+                                            style="background-color: rgb(0, 255, 98);">
+                                            <span class="fas fa-check"></span>
+                                        </li>
+                                        <li id="step-2" class="text-dark">
+                                            <span class="fas fa-truck"></span>
+                                        </li>
+                                        <li id="step-3" class="text-dark">
+                                            <span class="fas fa-truck"></span>
+                                        </li>
+                                        <li id="step-4" class="text-dark">
+                                            <span class="fas fa-truck "></span>
+                                        </li>
                                     </ul>
+                                    {{/if}}
+                                    {{#if this.shipped}}
+                                    <ul class="progressbar">
+                                        <li id="step-1" class="text-muted green"
+                                            style="background-color: rgb(0, 255, 98);">
+                                            <span class="fas fa-check"></span>
+                                        </li>
+                                        <li id="step-2" class="text-muted green"
+                                            style="background-color: rgb(0, 255, 98);">
+                                            <span class="fas fa-check"></span>
+                                        </li>
+                                        <li id="step-3" class="text-dark">
+                                            <span class="fas fa-truck "></span>
+                                        </li>
+                                        <li id="step-4" class="text-dark">
+                                            <span class="fas fa-truck "></span>
+                                        </li>
+                                    </ul>
+                                    {{/if}}
+                                    {{#if this.out_for_delivery}}
+                                    <ul class="progressbar">
+                                        <li id="step-1" class="text-muted green"
+                                            style="background-color: rgb(0, 255, 98);">
+                                            <span class="fas fa-check"></span>
+                                        </li>
+                                        <li id="step-2" class="text-muted green"
+                                            style="background-color: rgb(0, 255, 98);">
+                                            <span class="fas fa-check"></span>
+                                        </li>
+                                        <li id="step-3" class="text-muted green"
+                                            style="background-color: rgb(0, 255, 98);">
+                                            <span class="fas fa-check"></span>
+                                        </li>
+                                        <li id="step-4" class="text-dark">
+                                            <span class="fas fa-truck "></span>
+                                        </li>
+                                    </ul>
+                                    {{/if}}
+                                    {{#if this.delivered}}
+                                    <ul class="progressbar">
+                                        <li id="step-1" class="text-muted green"
+                                            style="background-color: rgb(0, 255, 98);">
+                                            <span class="fas fa-check"></span>
+                                        </li>
+                                        <li id="step-2" class="text-muted green"
+                                            style="background-color: rgb(0, 255, 98);">
+                                            <span class="fas fa-check"></span>
+                                        </li>
+                                        <li id="step-3" class="text-muted green"
+                                            style="background-color: rgb(0, 255, 98);">
+                                            <span class="fas fa-check"></span>
+                                        </li>
+                                        <li id="step-4" class="text-muted green"
+                                            style="background-color: rgb(0, 255, 98);">
+                                            <span class="fas fa-check"></span>
+                                        </li>
+                                    </ul>
+                                    {{/if}}
                                     <div id="tracker"></div>
-                                </div> --}}
+                                </div>
                             </div>
                         </div>
                     </div>
+
+
+
+
+<!-- Top modal -->
+
+{{!-- <div class="col-lg-4 col-md-6"> --}}
+
+    <div class="mt-3">
+        <!-- Button trigger modal -->
+      
+
+        <!-- Modal -->
+        <div class="modal modal-top fade" id="modalTop{{this._id}}" tabindex="-1">
+            <div class="modal-dialog">
+                <form class="modal-content">
+                    <div class="offcanvas-body" style=" background: rgb(194,195,195);background: linear-gradient(103deg, rgba(194,195,195,1) 7%, rgba(180,255,244,1) 71%, rgba(225,226,226,1) 100%);">
+                          <div class="mx-2 mt-5 " style="display: flex;flex-flow: column;align-items:center; ">
+                                                   <div>
+                                                    <div class="d-flex">
+                                                    <p style="color:black;">PAYMENT METHOD :</p>  <p>{{this.orderDetails.paymentMethod}}</p>
+
+                                                    </div>
+                                                    <div class="d-flex "> <p style="color:black;">TOTAL PRICE :</p><p> {{this.orderDetails.totalAmount}}</p>
+                                                    </div>
+                                                   <div class="d-flex">
+                                                       <p style="color:black;">DELIVERED TO:</p><p> {{this.orderDetails.deliveryDetails.address}}<br>{{this.orderDetails.deliveryDetails.city}},{{this.orderDetails.deliveryDetails.pincode}}</p>
+                                                   </div>
+                                                   
+                                                   </div>
+                                                     <hr >
+                                                    <div class="" style="width:335px"></div>
+                                                </div>
+                                            {{#each this.orderDetails.products}}
+                                        <div class=" d-flex justify-content-center">  
+                                             
+                                            <div class="" style="display: flex;flex-flow: column;align-items: center;" >
+                                                <h4 style="color:red; " >{{this.product.product_name}}</h4>
+
+
+                                                <div class="mx-2">
+
+                                                    <img src="/multerImage/{{this.product.img_id.[0]}}"
+                                                        alt="boy-with-laptop-light" width="300" class="img-fluid">
+                                                </div>
+                                                <div class="text-muted">
+                                                     <p style="color:black";>Price : {{this.product.price}}</p>
+                                                <p>Quantity : {{this.quantity}}</p>
+                                                </div>
+                                               
+                                               <hr>
+                                            </div>
+
+                                            
+                                        </div>
+                                        {{/each}}
+                         
+
+
+                        <div class="modal-footer">
+                            <div class="col d-flex justify-content-center">
+                           
+                             <div class="">
+                                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+                                Close
+                            </button>
+                           
+                             </div>
+                             </div>
+
+                           
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{{!-- </div> --}}
+
+<!-- /Top modal -->
+
+
+                  
+
+
+
 
                     {{/each}}
 
@@ -341,3 +352,80 @@
     </div>
 
 </div>
+
+
+
+
+  <!-- Vertical slider modal -->
+
+                    <div class="modal-onboarding modal fade animate__animated" id="onboardingSlideModal{{this._id}}"
+                        tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content text-center">
+
+                                <div id="modalCarouselControls" class="carousel slide pb-4 mb-2" data-interval="false">
+                                    <ol class="carousel-indicators">
+                                        <li data-target="#modalCarouselControls" data-slide-to="0" class="active"></li>
+                                        <li data-target="#modalCarouselControls" data-slide-to="1"></li>
+                                        <li data-target="#modalCarouselControls" data-slide-to="2"></li>
+                                    </ol>
+                                    <div class="carousel-inner" style="height:400px">
+                                        <div class="carousel-item active ">
+                                            <div class="onboarding-media d-flex justify-content-center">
+                                                <div class="mx-2 ">
+                                                    <p>PAYMENT METHOD :{{this.orderDetails.paymentMethod}}</p>
+                                                    <p>TOTAL PRICE : {{this.orderDetails.totalAmount}}</p>
+                                                    <p>DISCOUNT PRICE :</p>
+
+                                                    <div class="" style="width:335px"></div>
+                                                </div>
+                                            </div>
+                                            <div class="onboarding-content">
+
+                                            </div>
+                                        </div>
+                                        {{#each this.orderDetails.products}}
+                                        <div class="carousel-item " style="height:50%">
+                                            <div class="onboarding-media">
+                                                <h1 style="color:red;">{{this.product.product_name}}</h1>
+
+
+                                                <div class="mx-2">
+
+                                                    <img src="/multerImage/{{this.product.img_id.[0]}}"
+                                                        alt="boy-with-laptop-light" width="300" class="img-fluid">
+                                                </div>
+                                                <p>Price : {{this.product.price}}</p>
+                                                <p>Quantity : {{this.quantity}}</p>
+                                            </div>
+                                            <div class="onboarding-content">
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                        {{/each}}
+
+                                    </div>
+                                    <a class="carousel-control-prev" style="height: 20px;" href="#modalCarouselControls"
+                                        role="button" data-slide="prev">
+                                        <i class="bx bx-chevrons-left lh-1"></i><span style=" color: black;">Previous<p
+                                                style="color:blue; font-size: 50px;">
+                                                << /p></span>
+                                    </a>
+                                    <a class="carousel-control-next" style="height: 20px;" href="#modalCarouselControls"
+                                        role="button" data-slide="next">
+                                        <span style=" color: black;">Next<p style="color:blue;font-size: 50px;">></p>
+                                            </span><i class="bx bx-chevrons-right lh-1"></i>
+                                    </a>
+                                </div>
+                                <div class="modal-header border-0">
+                                    <a class="text-muted close-label" href="javascript:void(0);" data-dismiss="modal">
+                                        <p style="color:black;">close</p>
+                                    </a>
+                                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/ Vertical slider modal -->

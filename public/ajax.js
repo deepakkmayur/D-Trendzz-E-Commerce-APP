@@ -36,26 +36,82 @@ function removeProduct(productId) {
 
 
 function addToWishlist(productID){
-   $.ajax({
-      url:'/add-to-wishlist',
-      data:{productID},
-      method:'post',
-      success:(res)=>{
-         
-      }
-   })
+   // swal({
+   //    title: "Do you want to add item to cart?",
+   //    // text: "Once deleted, you will not be able to recover this imaginary file!",
+   //    icon: "warning",
+   //    buttons: true,
+   //    dangerMode: true,
+   //  })
+   //  .then((willAdd) => {
+   //    if (willAdd) {
+         $.ajax({
+            url:'/add-to-wishlist',
+            data:{productID},  
+            method:'post',
+            success:(res)=>{
+               
+            }
+         })
+         swal("Added to wishlist!", {
+           icon: "success",
+         });
+   //    } else {
+        
+   //    }
+   //  });
+   
+ 
 }
 
 function addToCart(productID){
+  //installed npm for sweetalert
+   // swal({
+   //    title: "Do you want to add item to cart?",
+   //    // text: "Do you want to add item to cart!",
+   //    icon: "info",
+   //    buttons: true,
+   //    dangerMode: true,
+   //  })
+   //  .then((willAdd) => {
+   //    if (willAdd) {
+         
    $.ajax({
       url:'/ADD_TO_CART',
       data:{productID},
       method:'post',
       success:()=>{
-         
       }
    })
+   swal("Added to cart!", {
+      icon: "success",
+   });
+   $("#refresh-cartcount").load(location.href + " #refresh-cartcount") 
+      // } else {
+      // //   swal("Your imaginary file is safe!");
+      // }
+   //  });
+
 }
+
+
+
+
+// function addToCart(productID){
+//    //installed npm for sweetalert
+//    $.ajax({
+//     url:'/ADD_TO_CART',
+//     data:{productID},
+//     method:'post',
+//     success:()=>{
+//        swal("Added to cart!", {
+//           icon: "success",
+//         });
+//         $("#refresh-section").load(location.href + " #refresh-section") 
+//     }
+//  })
+ 
+//  }
 
 
 function filterWomen(CATEGORY){
